@@ -47,6 +47,7 @@ final class PetNode: SKSpriteNode {
     }
 
     var canAttack: Bool { !animations.attacks.isEmpty }
+    var canWalk: Bool { !animations.walk.isEmpty }
     var canRun: Bool { !animations.run.isEmpty }
     var canJump: Bool { !animations.jump.isEmpty }
 

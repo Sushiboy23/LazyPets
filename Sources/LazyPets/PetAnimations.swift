@@ -8,6 +8,7 @@ enum PetKind: String, CaseIterable {
     case warrior = "Blonde Warrior"
     case hero = "Male Hero"
     case cat = "Cat"
+    case samurai = "Samurai"
 }
 
 /// Frame arrays + playback metadata for one pet, sliced from its sprite sheets.
@@ -187,6 +188,29 @@ enum PetAnimations {
         jumpTimePerFrame: 1.0 / 8.0
     )
 
+    /// Samurai: single-row 96×96 sheets — idle 10, run 16, attack 7 frames,
+    /// ~15px bottom padding. The free pack has NO walk sheet (slowed-down run
+    /// frames looked floaty), so `walk` is empty and the state machine always
+    /// runs him instead. Art faces right.
+    static let samurai = PetAnimationSet(
+        idle: slice(sheet: "samurai_idle", columns: 10, rows: 1, bottomCropPx: 15),
+        walk: [],
+        walkIn: [],
+        attacks: [
+            slice(sheet: "samurai_attack", columns: 7, rows: 1, bottomCropPx: 14),
+        ],
+        artFacesRight: true,
+        pixelScale: 2.5,
+        walkSpeed: 0,
+        idleTimePerFrame: 1.0 / 9.0,
+        walkTimePerFrame: 0,
+        walkInTimePerFrame: 0,
+        attackTimePerFrame: 1.0 / 12.0,
+        run: slice(sheet: "samurai_run", columns: 16, rows: 1, bottomCropPx: 15),
+        runTimePerFrame: 1.0 / 18.0,
+        runSpeed: 240
+    )
+
     static func set(for kind: PetKind) -> PetAnimationSet {
         switch kind {
         case .girl: return girl
@@ -194,6 +218,7 @@ enum PetAnimations {
         case .warrior: return warrior
         case .hero: return hero
         case .cat: return cat
+        case .samurai: return samurai
         }
     }
 

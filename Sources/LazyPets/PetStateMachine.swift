@@ -56,17 +56,20 @@ final class PetStateMachine {
         }
     }
 
-    /// After resting, pets that can jump or run sometimes do; everyone else
-    /// (and most rolls) just walks.
+    /// After resting, pets that can jump or run sometimes do; most rolls walk.
+    /// Pets without a walk animation (samurai) always run instead.
     private func pickNextActivity() {
         guard let pet else { return }
         let roll = Double.random(in: 0..<1)
         if pet.canJump && roll < 0.2 {
             enterJump()
-        } else if pet.canRun && roll < 0.5 {
+        } else if pet.canRun && (roll < 0.5 || !pet.canWalk) {
             enterRun()
-        } else {
+        } else if pet.canWalk {
             enterWalk()
+        } else {
+            // No gaits at all — just keep idling.
+            enterIdle()
         }
     }
 

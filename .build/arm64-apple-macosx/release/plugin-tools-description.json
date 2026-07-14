@@ -255,6 +255,48 @@
         }
       ]
     },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_attack.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/samurai_attack.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_attack.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_idle.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/samurai_idle.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_idle.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_run.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/samurai_run.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/samurai_run.png"
+        }
+      ]
+    },
     "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/transition.png" : {
       "inputs" : [
         {
