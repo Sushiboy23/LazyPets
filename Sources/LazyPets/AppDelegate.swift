@@ -1,90 +1,113 @@
 import AppKit
+import SwiftUI
 
-final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
+final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var overlayWindow: PetOverlayWindow?
     private var statusItem: NSStatusItem?
-    private var petItems: [NSMenuItem] = []
-    private var attackItem: NSMenuItem?
+    private var popover: NSPopover?
 
-    private var selectedPet: PetKind = .girl
+    private let rosterModel = PetRosterModel()
+    /// Scene identity for each enabled kind — the per-id plumbing into the scene.
+    private var instanceIDs: [PetKind: UUID] = [:]
+
+    private static let enabledPetsDefaultsKey = "enabledPetKinds"
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        setUpStatusItem()
         setUpOverlayWindow()
+
+        // Restore the roster before building UI; first launch falls back to
+        // the original single-pet default.
+        let saved = loadEnabledKinds() ?? [.girl]
+        rosterModel.enabledKinds = saved
+        for kind in PetKind.allCases where saved.contains(kind) {
+            addPetToDock(kind)
+        }
+
+        wireRosterModel()
+        setUpStatusItem()
     }
 
-    // MARK: - Menu bar
+    // MARK: - Roster actions
+
+    private func wireRosterModel() {
+        rosterModel.onToggle = { [weak self] kind, enabled in
+            guard let self else { return }
+            if enabled {
+                addPetToDock(kind)
+            } else {
+                removePetFromDock(kind)
+            }
+            saveEnabledKinds(rosterModel.enabledKinds)
+        }
+        rosterModel.onAttack = { [weak self] kind in
+            guard let self, let id = instanceIDs[kind] else { return }
+            overlayWindow?.triggerAttack(id: id)
+        }
+        rosterModel.onHideAll = { [weak self] hidden in
+            self?.overlayWindow?.setAllPetsHidden(hidden)
+        }
+        rosterModel.onQuit = {
+            NSApp.terminate(nil)
+        }
+    }
+
+    private func addPetToDock(_ kind: PetKind) {
+        guard instanceIDs[kind] == nil else { return }
+        let instance = PetInstance(kind: kind)
+        instanceIDs[kind] = instance.id
+        overlayWindow?.addPet(instance)
+    }
+
+    private func removePetFromDock(_ kind: PetKind) {
+        guard let id = instanceIDs.removeValue(forKey: kind) else { return }
+        overlayWindow?.removePet(id: id)
+    }
+
+    // MARK: - Persistence
+
+    private func loadEnabledKinds() -> Set<PetKind>? {
+        guard let raw = UserDefaults.standard.stringArray(forKey: Self.enabledPetsDefaultsKey) else {
+            return nil
+        }
+        return Set(raw.compactMap(PetKind.init(rawValue:)))
+    }
+
+    private func saveEnabledKinds(_ kinds: Set<PetKind>) {
+        // Store in stable declaration order for a tidy plist.
+        let raw = PetKind.allCases.filter(kinds.contains).map(\.rawValue)
+        UserDefaults.standard.set(raw, forKey: Self.enabledPetsDefaultsKey)
+    }
+
+    // MARK: - Menu bar popover
 
     private func setUpStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = item.button {
             button.image = NSImage(systemSymbolName: "pawprint.fill", accessibilityDescription: "LazyPets")
+            button.action = #selector(togglePopover(_:))
+            button.target = self
         }
-
-        let menu = NSMenu()
-        // Title flips between Hide/Show as the pet is toggled.
-        let toggleItem = NSMenuItem(title: "Hide Pet", action: #selector(toggleVisibility), keyEquivalent: "")
-        toggleItem.target = self
-        menu.addItem(toggleItem)
-
-        menu.addItem(.separator())
-
-        // One checkable item per pet; the checkmark tracks `selectedPet`.
-        for kind in PetKind.allCases {
-            let petItem = NSMenuItem(title: kind.rawValue, action: #selector(selectPet(_:)), keyEquivalent: "")
-            petItem.target = self
-            petItem.representedObject = kind.rawValue
-            petItem.state = kind == selectedPet ? .on : .off
-            menu.addItem(petItem)
-            petItems.append(petItem)
-        }
-
-        menu.addItem(.separator())
-
-        // Plays one of the knight's three attack animations at random.
-        // Disabled for pets without attack art (handled in validateMenuItem).
-        let attack = NSMenuItem(title: "Attack!", action: #selector(triggerAttack), keyEquivalent: "")
-        attack.target = self
-        menu.addItem(attack)
-        attackItem = attack
-
-        menu.addItem(.separator())
-
-        let quitItem = NSMenuItem(title: "Quit LazyPets", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
-        menu.addItem(quitItem)
-
-        item.menu = menu
         statusItem = item
+
+        let popover = NSPopover()
+        popover.behavior = .transient // closes on any outside click
+        popover.contentViewController = NSHostingController(
+            rootView: PetRosterView(model: rosterModel)
+        )
+        self.popover = popover
     }
 
-    @objc private func selectPet(_ sender: NSMenuItem) {
-        guard let rawValue = sender.representedObject as? String,
-              let kind = PetKind(rawValue: rawValue) else { return }
-        selectedPet = kind
-        for item in petItems {
-            item.state = item == sender ? .on : .off
+    @objc private func togglePopover(_ sender: NSStatusBarButton) {
+        guard let popover else { return }
+        if popover.isShown {
+            popover.performClose(sender)
+        } else {
+            popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
+            // Accessory apps don't get key focus automatically; without this
+            // the popover's controls can't be clicked reliably.
+            popover.contentViewController?.view.window?.makeKey()
         }
-        overlayWindow?.selectPet(kind)
-    }
-
-    @objc private func triggerAttack() {
-        overlayWindow?.triggerAttack()
-    }
-
-    // Grays out "Attack!" while a pet with no attack animations is selected.
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        if menuItem == attackItem {
-            return PetAnimations.set(for: selectedPet).attacks.isEmpty == false
-        }
-        return true
-    }
-
-    @objc private func toggleVisibility(_ sender: NSMenuItem) {
-        guard let window = overlayWindow else { return }
-        let hide = window.isVisible
-        window.setPetHidden(hide)
-        sender.title = hide ? "Show Pet" : "Hide Pet"
     }
 
     // MARK: - Overlay
