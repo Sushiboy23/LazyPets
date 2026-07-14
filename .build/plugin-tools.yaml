@@ -1,0 +1,443 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "LazyPets-arm64-apple-macosx-release.exe": ["<LazyPets-arm64-apple-macosx-release.exe>"]
+  "LazyPets-arm64-apple-macosx-release.module": ["<LazyPets-arm64-apple-macosx-release.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<LazyPets-arm64-apple-macosx-release.exe>","<LazyPets-arm64-apple-macosx-release.module>"]
+  "test": ["<LazyPets-arm64-apple-macosx-release.exe>","<LazyPets-arm64-apple-macosx-release.module>"]
+default: "main"
+nodes:
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/main.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DerivedSources/resource_bundle_accessor.swift"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/sources"]
+    description: "Write auxiliary file /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/sources"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swift.o"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.product/Objects.LinkFileList"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/idle.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/idle.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/idle.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/idle.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack1.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack1.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack1.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack1.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack2.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack2.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack2.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack2.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack3.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack3.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack3.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_attack3.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_idle.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_idle.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_idle.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_idle.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_walk.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_walk.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_walk.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/knight_walk.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/transition.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/transition.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/transition.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/transition.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/walk.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/walk.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/walk.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/walk.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack1_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack2_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_07.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_07.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_07.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack3_07.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_07.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_07.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_07.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_07.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_08.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_08.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_08.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_08.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_09.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_09.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_09.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_09.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_10.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_10.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_10.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_10.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_11.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_11.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_11.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack4_11.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_attack5_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_07.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_07.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_07.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_07.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_08.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_08.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_08.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_idle_08.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_01.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_01.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_01.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_01.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_02.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_02.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_02.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_02.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_03.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_03.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_03.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_03.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_04.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_04.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_04.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_04.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_05.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_05.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_05.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_05.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_06.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_06.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_06.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_06.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_07.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_07.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_07.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_07.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_08.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_08.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_08.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_08.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_09.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_09.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_09.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_09.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_10.png":
+    tool: copy-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_10.png"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_10.png"]
+    description: "Copying /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/warrior_walk_10.png"
+
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+
+  "<LazyPets-arm64-apple-macosx-release.exe>":
+    tool: phony
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets"]
+    outputs: ["<LazyPets-arm64-apple-macosx-release.exe>"]
+
+  "<LazyPets-arm64-apple-macosx-release.module>":
+    tool: phony
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/Modules/LazyPets.swiftmodule"]
+    outputs: ["<LazyPets-arm64-apple-macosx-release.module>"]
+
+  "C.LazyPets-arm64-apple-macosx-release.exe":
+    tool: shell
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.product/Objects.LinkFileList"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets"]
+    description: "Linking ./.build/arm64-apple-macosx/release/LazyPets"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release","-o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets","-module-name","LazyPets","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-dead_strip","-Xlinker","-alias","-Xlinker","_LazyPets_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.LazyPets-arm64-apple-macosx-release.module":
+    tool: shell
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/main.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DerivedSources/resource_bundle_accessor.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt","<LazyPets-arm64-apple-macosx-release.module-resources>","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/sources"]
+    outputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swift.o","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/Modules/LazyPets.swiftmodule"]
+    description: "Compiling Swift Module 'LazyPets' (9 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","LazyPets","-emit-dependencies","-emit-module","-emit-module-path","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/Modules/LazyPets.swiftmodule","-output-file-map","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/output-file-map.json","-whole-module-optimization","-num-threads","8","-c","@/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/sources","-I","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/Modules","-target","arm64-apple-macosx13.0","-whole-module-optimization","-num-threads","8","-serialize-diagnostics","-O","-j8","-DSWIFT_PACKAGE","-DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE","-module-cache-path","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","LazyPets_main","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","lazypets"]
+
+  "LazyPets-arm64-apple-macosx-release.module-resources":
+    tool: phony
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/idle.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack1.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack2.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_attack3.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_idle.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_walk.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/transition.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/walk.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack1_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack2_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack3_07.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_07.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_08.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_09.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_10.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack4_11.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_attack5_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_07.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_idle_08.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_01.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_02.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_03.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_04.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_05.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_06.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_07.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_08.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_09.png","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_10.png"]
+    outputs: ["<LazyPets-arm64-apple-macosx-release.module-resources>"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Package.swift","/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

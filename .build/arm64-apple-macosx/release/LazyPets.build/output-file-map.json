@@ -1,0 +1,61 @@
+{
+  "": {
+    "dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/LazyPets.d",
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/LazyPets.o",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/primary.swiftdeps"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/main.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/main.dia"
+  },
+  "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DerivedSources/resource_bundle_accessor.swift": {
+    "object": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.swiftdeps",
+    "diagnostics": "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/resource_bundle_accessor.dia"
+  }
+}

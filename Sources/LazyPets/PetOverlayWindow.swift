@@ -7,7 +7,9 @@ import SpriteKit
 final class PetOverlayWindow: NSPanel {
 
     // Extra height above the Dock strip so the pet has room to bob/jump.
-    private let petHeadroom: CGFloat = 80
+    // Must exceed the tallest sprite frame × its pet's pixelScale or the
+    // sprite gets clipped by the window edge. Current max: warrior, 250px × 0.7.
+    private let petHeadroom: CGFloat = 190
 
     private let skView = SKView()
     private var petScene: PetScene?
@@ -45,6 +47,31 @@ final class PetOverlayWindow: NSPanel {
         skView.wantsLayer = true
         skView.layer?.backgroundColor = .clear
         contentView = skView
+    }
+
+    // MARK: - Pet control (forwarded from the menu bar)
+
+    func selectPet(_ kind: PetKind) {
+        petScene?.pet.use(kind)
+    }
+
+    /// Temporarily hides the pet: orders the overlay out *and* pauses the
+    /// scene + behavior timers so a hidden pet costs nothing. Showing again
+    /// resumes from a fresh idle.
+    func setPetHidden(_ hidden: Bool) {
+        if hidden {
+            orderOut(nil)
+            petScene?.pet.stateMachine.stop()
+            petScene?.isPaused = true
+        } else {
+            petScene?.isPaused = false
+            petScene?.pet.stateMachine.restart()
+            orderFrontRegardless()
+        }
+    }
+
+    func triggerAttack() {
+        petScene?.pet.stateMachine.triggerAttack()
     }
 
     @objc private func repositionOverDock() {

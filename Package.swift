@@ -9,7 +9,11 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "LazyPets",
-            path: "Sources/LazyPets"
+            path: "Sources/LazyPets",
+            resources: [
+                // Pixel-art sprite sheets, loaded at runtime via Bundle.module.
+                .process("Resources")
+            ]
         )
     ]
 )

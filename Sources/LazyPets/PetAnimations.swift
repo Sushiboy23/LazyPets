@@ -5,6 +5,7 @@ import SpriteKit
 enum PetKind: String, CaseIterable {
     case girl = "Girl"
     case knight = "Knight"
+    case warrior = "Blonde Warrior"
 }
 
 /// Frame arrays + playback metadata for one pet, sliced from its sprite sheets.
@@ -17,6 +18,16 @@ struct PetAnimationSet {
     let attacks: [[SKTexture]]
     /// Which way the source art natively faces; PetNode mirrors relative to this.
     let artFacesRight: Bool
+    /// Per-pet render scale, chosen so pets look the same size on screen even
+    /// though their characters fill different fractions of their frames (girl's
+    /// body is 55px tall in-frame, knight's only 35px, warrior's ~120px).
+    /// Prefer multiples of 0.5 so each art pixel maps to a whole number of
+    /// Retina device pixels; fine-resolution art can bend this (see warrior).
+    let pixelScale: CGFloat
+    /// Ground speed in points/second. Tune together with `walkTimePerFrame`
+    /// so stride length matches movement — too fast and the feet slide, too
+    /// slow and the pet runs in place.
+    let walkSpeed: CGFloat
 
     // Seconds-per-frame for the fixed-timestep stepper (the tuning knobs).
     let idleTimePerFrame: TimeInterval
@@ -44,6 +55,8 @@ enum PetAnimations {
         walkIn: slice(sheet: "transition", columns: 2, rows: 1),
         attacks: [],
         artFacesRight: false,
+        pixelScale: 1.5,
+        walkSpeed: 110,
         idleTimePerFrame: 1.0 / 9.0,
         walkTimePerFrame: 1.0 / 20.0,
         walkInTimePerFrame: 1.0 / 10.0,
@@ -63,6 +76,38 @@ enum PetAnimations {
             slice(sheet: "knight_attack3", columns: 6, rows: 1, bottomCropPx: 23),
         ],
         artFacesRight: true,
+        pixelScale: 2.5,
+        walkSpeed: 110,
+        idleTimePerFrame: 1.0 / 9.0,
+        walkTimePerFrame: 1.0 / 12.0,
+        walkInTimePerFrame: 0,
+        attackTimePerFrame: 1.0 / 12.0
+    )
+
+    /// Blonde warrior: 54 individual 256×256 frame PNGs (not sheets) — idle 8,
+    /// walk 10, and 5 attack combos of 6/6/7/11/6 frames. Her body is ~120px
+    /// tall in-frame with feet at rows 241-249, so crop the uniform 6px below
+    /// the lowest baseline. Art faces right (eye/toes/shield-front — verify
+    /// zoomed-in before trusting a glance; the hair reads misleadingly).
+    ///
+    /// pixelScale 0.7 is deliberately not a Retina half-step: at this art
+    /// resolution (~120px body vs the others' ~35-55px) a fractional device
+    /// mapping is far less visible than the size mismatch it fixes — 0.5 would
+    /// leave her a head shorter than the girl.
+    static let warrior = PetAnimationSet(
+        idle: frames("warrior_idle", count: 8, bottomCropPx: 6),
+        walk: frames("warrior_walk", count: 10, bottomCropPx: 6),
+        walkIn: [],
+        attacks: [
+            frames("warrior_attack1", count: 6, bottomCropPx: 6),
+            frames("warrior_attack2", count: 6, bottomCropPx: 6),
+            frames("warrior_attack3", count: 7, bottomCropPx: 6),
+            frames("warrior_attack4", count: 11, bottomCropPx: 6),
+            frames("warrior_attack5", count: 6, bottomCropPx: 6),
+        ],
+        artFacesRight: true,
+        pixelScale: 0.7,
+        walkSpeed: 65,
         idleTimePerFrame: 1.0 / 9.0,
         walkTimePerFrame: 1.0 / 12.0,
         walkInTimePerFrame: 0,
@@ -73,6 +118,7 @@ enum PetAnimations {
         switch kind {
         case .girl: return girl
         case .knight: return knight
+        case .warrior: return warrior
         }
     }
 
@@ -118,6 +164,35 @@ enum PetAnimations {
             }
         }
         return textures
+    }
+
+    /// Loads an animation exported as individual frame PNGs named
+    /// `<base>_01.png` … `<base>_NN.png` (one texture per file, no slicing).
+    /// - Parameter bottomCropPx: transparent padding below the art's baseline,
+    ///   trimmed so feet sit on the texture's bottom edge.
+    private static func frames(
+        _ base: String,
+        count: Int,
+        bottomCropPx: Int = 0
+    ) -> [SKTexture] {
+        (1...count).compactMap { index in
+            let name = String(format: "%@_%02d", base, index)
+            guard let cgImage = loadCGImage(named: name) else {
+                assertionFailure("Missing sprite frame resource: \(name).png")
+                return nil
+            }
+            let full = SKTexture(cgImage: cgImage)
+            full.filteringMode = .nearest
+            guard bottomCropPx > 0 else { return full }
+
+            let crop = CGFloat(bottomCropPx) / CGFloat(cgImage.height)
+            let trimmed = SKTexture(
+                rect: CGRect(x: 0, y: crop, width: 1, height: 1 - crop),
+                in: full
+            )
+            trimmed.filteringMode = .nearest
+            return trimmed
+        }
     }
 
     /// Loads a PNG from the module bundle as a `CGImage` so slicing uses exact

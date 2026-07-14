@@ -8,7 +8,7 @@ final class PetScene: SKScene {
         didSet { positionPetOnDock() }
     }
 
-    private let pet = PetNode()
+    let pet = PetNode()
 
     override func didMove(to view: SKView) {
         backgroundColor = .clear
@@ -23,8 +23,9 @@ final class PetScene: SKScene {
     }
 
     private func positionPetOnDock() {
-        // Vertically: feet rest on top of the Dock strip.
-        pet.position = CGPoint(x: size.width / 2, y: dockHeight + pet.size.height / 2)
+        // Pet is bottom-anchored, so its position *is* the point its feet stand
+        // on — place that on top of the Dock strip.
+        pet.position = CGPoint(x: size.width / 2, y: dockHeight)
         pet.walkableRange = 0...size.width
     }
 }

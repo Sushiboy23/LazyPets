@@ -9,6 +9,7 @@ final class PetStateMachine {
     enum State {
         case idle
         case walking
+        case attacking
     }
 
     weak var pet: PetNode?
@@ -26,6 +27,23 @@ final class PetStateMachine {
     func stop() {
         timer?.invalidate()
         timer = nil
+    }
+
+    /// Re-enters idle immediately — used after swapping pets so the new
+    /// sprite set starts from a clean state.
+    func restart() {
+        enterIdle()
+    }
+
+    /// Interrupts whatever the pet is doing to play one random attack
+    /// animation, then falls back to idle. No-op for pets without attacks.
+    func triggerAttack() {
+        guard let pet, pet.canAttack else { return }
+        timer?.invalidate()
+        state = .attacking
+        pet.playAttack { [weak self] in
+            self?.enterIdle()
+        }
     }
 
     private func enterIdle() {

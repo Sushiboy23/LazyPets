@@ -11,18 +11,13 @@ final class PetNode: SKSpriteNode {
 
     private(set) var animations: PetAnimationSet = PetAnimations.set(for: .girl)
 
-    // Tune together with the set's `walkTimePerFrame`: if speed goes up
-    // without the frame rate, the feet slide; if frame rate outpaces speed,
-    // the pet runs in place.
-    private let walkSpeed: CGFloat = 110 // points per second
+    /// The active pet's ground speed (see `PetAnimationSet.walkSpeed`).
+    private var walkSpeed: CGFloat { animations.walkSpeed }
 
-    /// Scale that maps each source pixel to a whole number of *device* pixels
-    /// so the art stays crisp with `.nearest` filtering. 1.5pt = exactly 3
-    /// device pixels on Retina (2× backing) — even blocks, no shimmer. Stick
-    /// to multiples of 0.5 on Retina (or whole numbers to also cover 1× displays).
-    /// Note: the tallest frames are 61px, so `petHeadroom` in PetOverlayWindow
-    /// must be at least that × pixelScale or the head gets clipped.
-    private let pixelScale: CGFloat = 1.5
+    /// The active pet's render scale (see `PetAnimationSet.pixelScale`).
+    /// Note: `petHeadroom` in PetOverlayWindow must be at least the tallest
+    /// frame height × this scale or the sprite gets clipped by the window edge.
+    private var pixelScale: CGFloat { animations.pixelScale }
 
     init() {
         stateMachine = PetStateMachine()
@@ -55,6 +50,7 @@ final class PetNode: SKSpriteNode {
     /// Swaps to another pet's sprite set and restarts behavior from idle.
     func use(_ kind: PetKind) {
         animations = PetAnimations.set(for: kind)
+        setScale(pixelScale) // pets render at different scales
         stateMachine.restart()
     }
 
