@@ -1,47 +1,91 @@
 import ImageIO
 import SpriteKit
 
+/// The selectable pets. Raw value doubles as the user-facing menu title.
+enum PetKind: String, CaseIterable {
+    case girl = "Girl"
+    case knight = "Knight"
+}
+
+/// Frame arrays + playback metadata for one pet, sliced from its sprite sheets.
+struct PetAnimationSet {
+    let idle: [SKTexture]
+    let walk: [SKTexture]
+    /// Played once between idle and the walk loop. Empty = no transition.
+    let walkIn: [SKTexture]
+    /// One-shot attack variants, one picked at random per trigger. Empty = pet can't attack.
+    let attacks: [[SKTexture]]
+    /// Which way the source art natively faces; PetNode mirrors relative to this.
+    let artFacesRight: Bool
+
+    // Seconds-per-frame for the fixed-timestep stepper (the tuning knobs).
+    let idleTimePerFrame: TimeInterval
+    let walkTimePerFrame: TimeInterval
+    let walkInTimePerFrame: TimeInterval
+    let attackTimePerFrame: TimeInterval
+}
+
 /// Slices the pixel-art sprite sheets into individual, nearest-filtered
-/// `SKTexture` frames and exposes ready-to-play frame arrays for each
-/// animation state.
+/// `SKTexture` frames and exposes a ready-to-play `PetAnimationSet` per pet.
 ///
-/// Every sheet is a regular grid, so frame rects are derived from the sheet's
-/// pixel size and its grid dimensions — no external JSON is needed. If a sheet
-/// ever becomes irregular (variable trims, packed atlas), re-export from
-/// Aseprite with a JSON data file and drive slicing from the frame rects/tags
-/// instead.
-///
-/// Playback is a fixed-timestep frame stepper (`SKAction.animate(withTextures:)`),
-/// deliberately not spring/easing, so pixels advance on whole frames. The
-/// per-frame durations below are the tuning knobs — adjust by eye in the app.
+/// Every sheet is a regular grid whose geometry was verified against the
+/// PNGs' transparent gutters (empty pixel columns/rows between frames) — not
+/// just by dividing the sheet size, which can be ambiguous. If a sheet ever
+/// becomes irregular (variable trims, packed atlas), re-export from Aseprite
+/// with a JSON data file and drive slicing from the frame rects/tags instead.
 enum PetAnimations {
 
-    // Seconds-per-frame for the fixed-timestep stepper.
-    static let idleTimePerFrame: TimeInterval = 1.0 / 9.0        // ~9 fps
-    static let walkTimePerFrame: TimeInterval = 1.0 / 12.0       // ~12 fps
-    static let transitionTimePerFrame: TimeInterval = 1.0 / 10.0 // ~10 fps
-
-    /// Idle: 10-frame horizontal strip (460×55, 46×55 per frame). Loops forever.
-    static let idle: [SKTexture] = slice(sheet: "idle", columns: 10, rows: 1)
-
-    /// Walk: 5×6 grid (180×348, 36×58 per frame). Only the first 26 cells are
-    /// used — the last 4 are empty — so we drop them. Side-on cycle facing right.
-    static let walk: [SKTexture] = Array(
-        slice(sheet: "walk", columns: 5, rows: 6, usableFrames: 26)
+    /// Girl: idle 10×1 @46×55, walk 4×6 @45×58 (gutters at x=44/89/134 rule
+    /// out the also-evenly-dividing 5×36 layout), 2-frame idle→walk transition.
+    /// Art faces left.
+    static let girl = PetAnimationSet(
+        idle: slice(sheet: "idle", columns: 10, rows: 1),
+        walk: slice(sheet: "walk", columns: 4, rows: 6),
+        walkIn: slice(sheet: "transition", columns: 2, rows: 1),
+        attacks: [],
+        artFacesRight: false,
+        idleTimePerFrame: 1.0 / 9.0,
+        walkTimePerFrame: 1.0 / 20.0,
+        walkInTimePerFrame: 1.0 / 10.0,
+        attackTimePerFrame: 0
     )
 
-    /// Idle→walk transition: 2-frame strip (90×58, 45×58 per frame). Plays once.
-    static let transition: [SKTexture] = slice(sheet: "transition", columns: 2, rows: 1)
+    /// Knight: single-row 96×84 sheets — idle 7, walk 8, attacks 6/5/6 frames.
+    /// All sheets carry a uniform 23px transparent strip below the feet;
+    /// cropping it keeps the bottom-anchored feet on the Dock. Art faces right.
+    static let knight = PetAnimationSet(
+        idle: slice(sheet: "knight_idle", columns: 7, rows: 1, bottomCropPx: 23),
+        walk: slice(sheet: "knight_walk", columns: 8, rows: 1, bottomCropPx: 23),
+        walkIn: [],
+        attacks: [
+            slice(sheet: "knight_attack1", columns: 6, rows: 1, bottomCropPx: 23),
+            slice(sheet: "knight_attack2", columns: 5, rows: 1, bottomCropPx: 23),
+            slice(sheet: "knight_attack3", columns: 6, rows: 1, bottomCropPx: 23),
+        ],
+        artFacesRight: true,
+        idleTimePerFrame: 1.0 / 9.0,
+        walkTimePerFrame: 1.0 / 12.0,
+        walkInTimePerFrame: 0,
+        attackTimePerFrame: 1.0 / 12.0
+    )
+
+    static func set(for kind: PetKind) -> PetAnimationSet {
+        switch kind {
+        case .girl: return girl
+        case .knight: return knight
+        }
+    }
 
     // MARK: - Slicing
 
     /// Slices a grid sheet into textures in row-major order (top-left first).
-    /// - Parameter usableFrames: cap for sheets whose trailing cells are empty.
+    /// - Parameter bottomCropPx: transparent padding below the art's baseline,
+    ///   trimmed from every frame so feet sit on the texture's bottom edge.
     private static func slice(
         sheet name: String,
         columns: Int,
         rows: Int,
-        usableFrames: Int? = nil
+        bottomCropPx: Int = 0
     ) -> [SKTexture] {
         guard let cgImage = loadCGImage(named: name) else {
             assertionFailure("Missing sprite sheet resource: \(name).png")
@@ -53,21 +97,20 @@ enum PetAnimations {
 
         let frameWidth = 1.0 / CGFloat(columns)
         let frameHeight = 1.0 / CGFloat(rows)
-        let limit = usableFrames ?? (columns * rows)
+        let crop = CGFloat(bottomCropPx) / CGFloat(cgImage.height)
 
         var textures: [SKTexture] = []
-        textures.reserveCapacity(limit)
+        textures.reserveCapacity(columns * rows)
 
         // Sheets are authored top-left origin, row-major. `SKTexture(rect:in:)`
         // uses normalized, bottom-left-origin coordinates, so flip the row.
-        outer: for row in 0..<rows {
+        for row in 0..<rows {
             for column in 0..<columns {
-                guard textures.count < limit else { break outer }
                 let rect = CGRect(
                     x: CGFloat(column) * frameWidth,
-                    y: 1.0 - CGFloat(row + 1) * frameHeight,
+                    y: 1.0 - CGFloat(row + 1) * frameHeight + crop,
                     width: frameWidth,
-                    height: frameHeight
+                    height: frameHeight - crop
                 )
                 let frame = SKTexture(rect: rect, in: parent)
                 frame.filteringMode = .nearest
