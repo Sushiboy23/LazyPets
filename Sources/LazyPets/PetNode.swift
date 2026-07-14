@@ -1,10 +1,9 @@
 import AppKit
 import SpriteKit
 
-/// The pet itself: a sprite plus the state machine driving its idle/walk
-/// behavior. v1 uses procedural placeholder art (a simple shape) so the app
-/// is runnable without any asset pipeline; swap `makePlaceholderTexture`
-/// for real sprite-sheet frames later without touching the state machine.
+/// The pet itself: a pixel-art sprite plus the state machine driving its
+/// idle/walk behavior. Frames come from `PetAnimations` (sliced sprite sheets)
+/// and are advanced by a fixed-timestep frame stepper, not spring/easing.
 final class PetNode: SKSpriteNode {
 
     let stateMachine: PetStateMachine
@@ -12,67 +11,82 @@ final class PetNode: SKSpriteNode {
 
     private let walkSpeed: CGFloat = 60 // points per second
 
+    /// Integer scale keeps the pixel art crisp — each source pixel maps to an
+    /// N×N block. Combined with `.nearest` filtering there's no bilinear blur.
+    private let pixelScale: CGFloat = 2
+
     init() {
-        let texture = PetNode.makePlaceholderTexture()
         stateMachine = PetStateMachine()
-        super.init(texture: texture, color: .clear, size: texture.size())
+        let firstFrame = PetAnimations.idle.first
+        super.init(
+            texture: firstFrame,
+            color: .clear,
+            size: firstFrame?.size() ?? CGSize(width: 46, height: 55)
+        )
+        texture?.filteringMode = .nearest
+
+        // Anchor at bottom-center so the feet stay pinned to the Dock even
+        // though idle/walk/transition frames have slightly different heights
+        // (55 vs 58px) — the baseline never pops between states.
+        anchorPoint = CGPoint(x: 0.5, y: 0)
+        setScale(pixelScale)
+
         stateMachine.pet = self
+        playIdle()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Placeholder art
-
-    /// Draws a simple rounded blob with two "ears" so there's a recognizable
-    /// silhouette on screen before real sprite art exists.
-    private static func makePlaceholderTexture() -> SKTexture {
-        let size = CGSize(width: 48, height: 40)
-        let image = NSImage(size: size)
-        image.lockFocus()
-
-        NSColor.systemOrange.setFill()
-        let body = NSBezierPath(ovalIn: NSRect(x: 4, y: 0, width: 40, height: 32))
-        body.fill()
-
-        let earLeft = NSBezierPath(ovalIn: NSRect(x: 6, y: 24, width: 12, height: 12))
-        let earRight = NSBezierPath(ovalIn: NSRect(x: 30, y: 24, width: 12, height: 12))
-        earLeft.fill()
-        earRight.fill()
-
-        image.unlockFocus()
-        return SKTexture(image: image)
-    }
-
     // MARK: - Actions used by the state machine
 
+    /// Loops the idle strip continuously.
     func playIdle() {
         removeAllActions()
-        let breathe = SKAction.sequence([
-            .scaleY(to: 0.94, duration: 0.6),
-            .scaleY(to: 1.0, duration: 0.6)
-        ])
-        run(.repeatForever(breathe), withKey: "idle")
+        xScale = pixelScale // face right while resting.
+
+        let loop = SKAction.animate(
+            withTextures: PetAnimations.idle,
+            timePerFrame: PetAnimations.idleTimePerFrame,
+            resize: true,
+            restore: false
+        )
+        run(.repeatForever(loop), withKey: "frames")
     }
 
+    /// Plays the idle→walk transition once, then loops the walk cycle while the
+    /// pet crosses the Dock. `completion` fires when it reaches the edge.
     func playWalk(toRight: Bool, completion: @escaping () -> Void) {
         removeAllActions()
-        xScale = toRight ? abs(xScale) : -abs(xScale)
+        // Sprite art faces right; mirror it (around the center) to walk left.
+        xScale = toRight ? pixelScale : -pixelScale
 
-        let targetX = toRight ? walkableRange.upperBound - size.width / 2
-                               : walkableRange.lowerBound + size.width / 2
+        // Frame stepper: transition once → walk loop forever.
+        let transition = SKAction.animate(
+            withTextures: PetAnimations.transition,
+            timePerFrame: PetAnimations.transitionTimePerFrame,
+            resize: true,
+            restore: false
+        )
+        let walkLoop = SKAction.animate(
+            withTextures: PetAnimations.walk,
+            timePerFrame: PetAnimations.walkTimePerFrame,
+            resize: true,
+            restore: false
+        )
+        run(.sequence([transition, .repeatForever(walkLoop)]), withKey: "frames")
+
+        // Movement runs concurrently with the frame stepper. Inset the target
+        // by half the sprite's visual width so it doesn't clip off the edge.
+        let halfWidth = size.width * pixelScale / 2
+        let targetX = toRight
+            ? walkableRange.upperBound - halfWidth
+            : walkableRange.lowerBound + halfWidth
         let distance = abs(targetX - position.x)
         let duration = TimeInterval(distance / walkSpeed)
 
-        let bob = SKAction.sequence([
-            .moveBy(x: 0, y: 4, duration: 0.15),
-            .moveBy(x: 0, y: -4, duration: 0.15)
-        ])
-        let bobbing = SKAction.repeatForever(bob)
-        run(bobbing, withKey: "bob")
-
         let move = SKAction.moveTo(x: targetX, duration: duration)
-        run(move, completion: completion)
+        run(.sequence([move, .run(completion)]), withKey: "move")
     }
 }
