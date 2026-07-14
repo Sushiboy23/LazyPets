@@ -49,29 +49,33 @@ final class PetOverlayWindow: NSPanel {
         contentView = skView
     }
 
-    // MARK: - Pet control (forwarded from the menu bar)
+    // MARK: - Pet control (forwarded from the status-item popover)
 
-    func selectPet(_ kind: PetKind) {
-        petScene?.pet.use(kind)
+    func addPet(_ instance: PetInstance) {
+        petScene?.addPet(instance)
     }
 
-    /// Temporarily hides the pet: orders the overlay out *and* pauses the
-    /// scene + behavior timers so a hidden pet costs nothing. Showing again
-    /// resumes from a fresh idle.
-    func setPetHidden(_ hidden: Bool) {
+    func removePet(id: UUID) {
+        petScene?.removePet(id: id)
+    }
+
+    func triggerAttack(id: UUID) {
+        petScene?.triggerAttack(id: id)
+    }
+
+    /// Temporarily hides all pets: orders the overlay out *and* pauses the
+    /// scene + every pet's behavior timers so hidden pets cost nothing.
+    /// Showing again resumes each from a fresh idle.
+    func setAllPetsHidden(_ hidden: Bool) {
         if hidden {
             orderOut(nil)
-            petScene?.pet.stateMachine.stop()
+            petScene?.pauseAllPets()
             petScene?.isPaused = true
         } else {
             petScene?.isPaused = false
-            petScene?.pet.stateMachine.restart()
+            petScene?.resumeAllPets()
             orderFrontRegardless()
         }
-    }
-
-    func triggerAttack() {
-        petScene?.pet.stateMachine.triggerAttack()
     }
 
     @objc private func repositionOverDock() {

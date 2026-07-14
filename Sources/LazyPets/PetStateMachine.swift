@@ -9,6 +9,8 @@ final class PetStateMachine {
     enum State {
         case idle
         case walking
+        case running
+        case jumping
         case attacking
     }
 
@@ -50,7 +52,21 @@ final class PetStateMachine {
         state = .idle
         pet?.playIdle()
         scheduleNext(after: Double.random(in: idleDurationRange)) { [weak self] in
-            self?.enterWalk()
+            self?.pickNextActivity()
+        }
+    }
+
+    /// After resting, pets that can jump or run sometimes do; everyone else
+    /// (and most rolls) just walks.
+    private func pickNextActivity() {
+        guard let pet else { return }
+        let roll = Double.random(in: 0..<1)
+        if pet.canJump && roll < 0.2 {
+            enterJump()
+        } else if pet.canRun && roll < 0.5 {
+            enterRun()
+        } else {
+            enterWalk()
         }
     }
 
@@ -64,6 +80,26 @@ final class PetStateMachine {
         scheduleNext(after: Double.random(in: walkDurationRange)) { [weak self] in
             // Walk "timed out" while still mid-stride; let the current move
             // action finish naturally and fall back to idle after it does.
+            self?.enterIdle()
+        }
+    }
+
+    private func enterRun() {
+        state = .running
+        let toRight = Bool.random()
+        pet?.playRun(toRight: toRight) { [weak self] in
+            self?.enterIdle()
+        }
+        // Runs cover ground fast; keep the burst short.
+        scheduleNext(after: Double.random(in: 1.5...4)) { [weak self] in
+            self?.enterIdle()
+        }
+    }
+
+    private func enterJump() {
+        state = .jumping
+        timer?.invalidate()
+        pet?.playJump { [weak self] in
             self?.enterIdle()
         }
     }

@@ -49,6 +49,10 @@ LazyPets/
     PetStateMachine.swift     — randomized idle <-> walk timing
 ```
 
+## Art credits
+
+- Male Hero sprites by [Ozzbit Games](https://ozzbit-games.itch.io) (free version — personal, non-commercial use; credit required).
+
 ## Known limitations (v1, by design — see PLAN.md)
 
 - Placeholder procedural art, not real sprite frames.

@@ -96,6 +96,8 @@ struct PetRosterView: View {
         case .girl: return .blue
         case .knight: return .green
         case .warrior: return .orange
+        case .hero: return .purple
+        case .cat: return .pink
         }
     }
 

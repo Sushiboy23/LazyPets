@@ -6,6 +6,8 @@ enum PetKind: String, CaseIterable {
     case girl = "Girl"
     case knight = "Knight"
     case warrior = "Blonde Warrior"
+    case hero = "Male Hero"
+    case cat = "Cat"
 }
 
 /// Frame arrays + playback metadata for one pet, sliced from its sprite sheets.
@@ -34,6 +36,18 @@ struct PetAnimationSet {
     let walkTimePerFrame: TimeInterval
     let walkInTimePerFrame: TimeInterval
     let attackTimePerFrame: TimeInterval
+
+    // Optional extra gaits — empty/zero means the pet doesn't have them and
+    // the state machine will never pick them. (`var` + default so the
+    // memberwise init lets older pets omit these entirely.)
+
+    /// Faster gait, picked at random instead of walking.
+    var run: [SKTexture] = []
+    var runTimePerFrame: TimeInterval = 0
+    var runSpeed: CGFloat = 0
+    /// In-place hop (ascent + descent frames combined), triggered from idle.
+    var jump: [SKTexture] = []
+    var jumpTimePerFrame: TimeInterval = 0
 }
 
 /// Slices the pixel-art sprite sheets into individual, nearest-filtered
@@ -114,11 +128,72 @@ enum PetAnimations {
         attackTimePerFrame: 1.0 / 12.0
     )
 
+    /// Male hero (Ozzbit Games, free version — personal use, credit required):
+    /// single-row 128×128 sheets with a uniform 48px strip below the feet —
+    /// idle/walk/run 10 frames, jump 6 + fall 4 (combined into one hop arc),
+    /// combo_1 3, combo_1_end 4. Attack move 1 is the quick opening slash;
+    /// move 2 chains the full combo. Art faces right.
+    static let hero: PetAnimationSet = {
+        let combo1 = slice(sheet: "hero_combo1", columns: 3, rows: 1, bottomCropPx: 48)
+        let combo1End = slice(sheet: "hero_combo1_end", columns: 4, rows: 1, bottomCropPx: 48)
+        return PetAnimationSet(
+            idle: slice(sheet: "hero_idle", columns: 10, rows: 1, bottomCropPx: 48),
+            walk: slice(sheet: "hero_walk", columns: 10, rows: 1, bottomCropPx: 48),
+            walkIn: [],
+            attacks: [
+                combo1,
+                combo1 + combo1End,
+            ],
+            artFacesRight: true,
+            pixelScale: 2.5,
+            walkSpeed: 90,
+            idleTimePerFrame: 1.0 / 9.0,
+            walkTimePerFrame: 1.0 / 12.0,
+            walkInTimePerFrame: 0,
+            attackTimePerFrame: 1.0 / 10.0,
+            run: slice(sheet: "hero_run", columns: 10, rows: 1, bottomCropPx: 48),
+            runTimePerFrame: 1.0 / 15.0,
+            runSpeed: 220,
+            jump: slice(sheet: "hero_jump", columns: 6, rows: 1, bottomCropPx: 48)
+                + slice(sheet: "hero_fall", columns: 4, rows: 1, bottomCropPx: 48),
+            jumpTimePerFrame: 1.0 / 12.0
+        )
+    }()
+
+    /// Cat: single-row 80×64 sheets — idle 8, walk 12, run 8, jump 3, attack 8
+    /// frames. Bottom padding varies slightly per sheet (grounded anims 16px,
+    /// pounce/airborne dip lower), so each sheet crops its own measured pad.
+    /// Body is only ~28px tall — 2.0× keeps him properly cat-sized next to
+    /// the human pets. Art faces left. (The pack's 3-frame RUNNING JUMP sheet
+    /// is unused — the state machine only has an in-place hop.)
+    static let cat = PetAnimationSet(
+        idle: slice(sheet: "cat_idle", columns: 8, rows: 1, bottomCropPx: 16),
+        walk: slice(sheet: "cat_walk", columns: 12, rows: 1, bottomCropPx: 16),
+        walkIn: [],
+        attacks: [
+            slice(sheet: "cat_attack", columns: 8, rows: 1, bottomCropPx: 14),
+        ],
+        artFacesRight: false,
+        pixelScale: 2.0,
+        walkSpeed: 55,
+        idleTimePerFrame: 1.0 / 8.0,
+        walkTimePerFrame: 1.0 / 12.0,
+        walkInTimePerFrame: 0,
+        attackTimePerFrame: 1.0 / 12.0,
+        run: slice(sheet: "cat_run", columns: 8, rows: 1, bottomCropPx: 16),
+        runTimePerFrame: 1.0 / 15.0,
+        runSpeed: 180,
+        jump: slice(sheet: "cat_jump", columns: 3, rows: 1, bottomCropPx: 17),
+        jumpTimePerFrame: 1.0 / 8.0
+    )
+
     static func set(for kind: PetKind) -> PetAnimationSet {
         switch kind {
         case .girl: return girl
         case .knight: return knight
         case .warrior: return warrior
+        case .hero: return hero
+        case .cat: return cat
         }
     }
 

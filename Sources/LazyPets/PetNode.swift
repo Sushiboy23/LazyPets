@@ -9,7 +9,8 @@ final class PetNode: SKSpriteNode {
     let stateMachine: PetStateMachine
     var walkableRange: ClosedRange<CGFloat> = 0...400
 
-    private(set) var animations: PetAnimationSet = PetAnimations.set(for: .girl)
+    let kind: PetKind
+    let animations: PetAnimationSet
 
     /// The active pet's ground speed (see `PetAnimationSet.walkSpeed`).
     private var walkSpeed: CGFloat { animations.walkSpeed }
@@ -19,7 +20,9 @@ final class PetNode: SKSpriteNode {
     /// frame height × this scale or the sprite gets clipped by the window edge.
     private var pixelScale: CGFloat { animations.pixelScale }
 
-    init() {
+    init(kind: PetKind) {
+        self.kind = kind
+        animations = PetAnimations.set(for: kind)
         stateMachine = PetStateMachine()
         let firstFrame = animations.idle.first
         super.init(
@@ -43,15 +46,19 @@ final class PetNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Pet selection
-
     var canAttack: Bool { !animations.attacks.isEmpty }
+    var canRun: Bool { !animations.run.isEmpty }
+    var canJump: Bool { !animations.jump.isEmpty }
 
-    /// Swaps to another pet's sprite set and restarts behavior from idle.
-    func use(_ kind: PetKind) {
-        animations = PetAnimations.set(for: kind)
-        setScale(pixelScale) // pets render at different scales
-        stateMachine.restart()
+    /// Ground level captured when a jump starts, so interrupting the hop
+    /// mid-air (e.g. an attack) can't leave the pet floating.
+    private var groundY: CGFloat?
+
+    private func snapToGround() {
+        if let groundY {
+            position.y = groundY
+            self.groundY = nil
+        }
     }
 
     /// Mirrors the sprite only when the requested direction differs from the
@@ -65,6 +72,7 @@ final class PetNode: SKSpriteNode {
     /// Loops the idle strip continuously.
     func playIdle() {
         removeAllActions()
+        snapToGround()
         xScale = pixelScale // unmirrored — the art's native pose while resting.
 
         let loop = SKAction.animate(
@@ -79,26 +87,62 @@ final class PetNode: SKSpriteNode {
     /// Plays the idle→walk transition once (if the pet has one), then loops the
     /// walk cycle while crossing the Dock. `completion` fires at the edge.
     func playWalk(toRight: Bool, completion: @escaping () -> Void) {
+        playGait(
+            loopFrames: animations.walk,
+            timePerFrame: animations.walkTimePerFrame,
+            intro: animations.walkIn,
+            introTimePerFrame: animations.walkInTimePerFrame,
+            speed: walkSpeed,
+            toRight: toRight,
+            completion: completion
+        )
+    }
+
+    /// Loops the run cycle while sprinting across the Dock. Only meaningful
+    /// for pets where `canRun` is true.
+    func playRun(toRight: Bool, completion: @escaping () -> Void) {
+        playGait(
+            loopFrames: animations.run,
+            timePerFrame: animations.runTimePerFrame,
+            intro: [],
+            introTimePerFrame: 0,
+            speed: animations.runSpeed,
+            toRight: toRight,
+            completion: completion
+        )
+    }
+
+    /// Shared gait player: optional intro once → loop frames forever, while a
+    /// concurrent move action carries the pet toward the Dock edge.
+    private func playGait(
+        loopFrames: [SKTexture],
+        timePerFrame: TimeInterval,
+        intro: [SKTexture],
+        introTimePerFrame: TimeInterval,
+        speed: CGFloat,
+        toRight: Bool,
+        completion: @escaping () -> Void
+    ) {
         removeAllActions()
+        snapToGround()
         xScale = facingScale(toRight: toRight)
 
-        // Frame stepper: optional transition once → walk loop forever.
-        let walkLoop = SKAction.animate(
-            with: animations.walk,
-            timePerFrame: animations.walkTimePerFrame,
+        let loop = SKAction.animate(
+            with: loopFrames,
+            timePerFrame: timePerFrame,
             resize: true,
             restore: false
         )
         var steps: [SKAction] = []
-        if !animations.walkIn.isEmpty {
+        if !intro.isEmpty {
             steps.append(.animate(
-                with: animations.walkIn,
-                timePerFrame: animations.walkInTimePerFrame,
+                with: intro,
+                timePerFrame: introTimePerFrame,
                 resize: true,
                 restore: false
             ))
         }
-        steps.append(.repeatForever(walkLoop))
+        steps.append(.repeatForever(loop))
         run(.sequence(steps), withKey: "frames")
 
         // Movement runs concurrently with the frame stepper. Inset the target
@@ -108,10 +152,38 @@ final class PetNode: SKSpriteNode {
             ? walkableRange.upperBound - halfWidth
             : walkableRange.lowerBound + halfWidth
         let distance = abs(targetX - position.x)
-        let duration = TimeInterval(distance / walkSpeed)
+        let duration = TimeInterval(distance / speed)
 
         let move = SKAction.moveTo(x: targetX, duration: duration)
         run(.sequence([move, .run(completion)]), withKey: "move")
+    }
+
+    /// One in-place hop: jump/fall frames play once while a parabola-ish
+    /// up-then-down move runs alongside. Keeps the current facing.
+    func playJump(completion: @escaping () -> Void) {
+        guard canJump else {
+            completion()
+            return
+        }
+        removeAllActions()
+        snapToGround()
+        groundY = position.y
+
+        let frames = SKAction.animate(
+            with: animations.jump,
+            timePerFrame: animations.jumpTimePerFrame,
+            resize: true,
+            restore: false
+        )
+        run(.sequence([frames, .run(completion)]), withKey: "frames")
+
+        // Split the hop across the animation duration; ease out/in fakes an arc.
+        let half = animations.jumpTimePerFrame * Double(animations.jump.count) / 2
+        let up = SKAction.moveBy(x: 0, y: 44, duration: half)
+        up.timingMode = .easeOut
+        let down = SKAction.moveBy(x: 0, y: -44, duration: half)
+        down.timingMode = .easeIn
+        run(.sequence([up, down]), withKey: "move")
     }
 
     /// Plays one randomly chosen attack variant once, in place, keeping the
@@ -122,6 +194,7 @@ final class PetNode: SKSpriteNode {
             return
         }
         removeAllActions()
+        snapToGround()
 
         let swing = SKAction.animate(
             with: attack,
