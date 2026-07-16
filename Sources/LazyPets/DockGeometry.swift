@@ -7,11 +7,10 @@ import AppKit
 ///
 /// This only works cleanly when the Dock is at the bottom of the screen
 /// (the default, and the only orientation LazyPets v1 supports) and not
-/// auto-hidden. When auto-hidden, visibleFrame ~= full frame, so we fall
-/// back to a small fixed strip.
+/// auto-hidden. When auto-hidden, visibleFrame ~= full frame, so the "Dock"
+/// is a zero-height strip and pets stand flush on the screen's bottom edge.
 enum DockGeometry {
 
-    static let autoHideFallbackHeight: CGFloat = 6
     static let minimumRealisticHeight: CGFloat = 30
 
     /// Returns the Dock's frame in screen coordinates for the given screen,
@@ -29,7 +28,7 @@ enum DockGeometry {
 
         let dockHeight = bottomInset >= minimumRealisticHeight
             ? bottomInset
-            : autoHideFallbackHeight
+            : 0 // no visible Dock here — pets stand on the screen edge itself
 
         return NSRect(
             x: full.minX,
@@ -39,11 +38,4 @@ enum DockGeometry {
         )
     }
 
-    /// The screen the Dock actually renders on. In multi-display setups this
-    /// is usually the screen containing the menu bar, but users can drag the
-    /// Dock to any display — NSScreen doesn't expose which, so we default to
-    /// `.main` and revisit if this proves wrong in testing.
-    static func dockScreen() -> NSScreen? {
-        NSScreen.main
-    }
 }

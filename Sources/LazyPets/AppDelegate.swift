@@ -8,24 +8,62 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var popover: NSPopover?
 
     private let rosterModel = PetRosterModel()
+    private let dropController = FileDropController()
     /// Scene identity for each enabled kind — the per-id plumbing into the scene.
     private var instanceIDs: [PetKind: UUID] = [:]
 
     private static let enabledPetsDefaultsKey = "enabledPetKinds"
+    private static let attacksFilesDefaultsKey = "attacksFilesPetKinds"
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setUpOverlayWindow()
 
         // Restore the roster before building UI; first launch falls back to
         // the original single-pet default.
-        let saved = loadEnabledKinds() ?? [.girl]
+        let saved = loadKinds(forKey: Self.enabledPetsDefaultsKey) ?? [.girl]
         rosterModel.enabledKinds = saved
+        rosterModel.attacksFiles = loadKinds(forKey: Self.attacksFilesDefaultsKey) ?? []
         for kind in PetKind.allCases where saved.contains(kind) {
             addPetToDock(kind)
         }
 
         wireRosterModel()
         setUpStatusItem()
+        setUpFileDrops()
+    }
+
+    // MARK: - File-attack drops
+
+    private func setUpFileDrops() {
+        dropController.targetsProvider = { [weak self] in
+            guard let self, let window = overlayWindow else { return [] }
+            return window.fileDropTargets(for: rosterModel.attacksFiles)
+        }
+        dropController.onDrop = { [weak self] id, urls in
+            guard let self else { return }
+            overlayWindow?.triggerAttack(id: id) {
+                var trashedNames: [String] = []
+                for url in urls {
+                    do {
+                        // Recoverable by design: Trash, never a permanent delete.
+                        try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+                        trashedNames.append(url.lastPathComponent)
+                    } catch {
+                        NSSound.beep()
+                        NSLog("LazyPets: couldn't trash \(url.path): \(error)")
+                    }
+                }
+                if let name = trashedNames.first {
+                    TrashToast.show(message: trashedNames.count == 1
+                        ? "“\(name)” moved to Bin"
+                        : "\(trashedNames.count) files moved to Bin")
+                }
+            }
+        }
+        dropController.onHover = { [weak self] id, hovering in
+            self?.overlayWindow?.setPetHighlighted(id: id, hovering)
+        }
+        dropController.start()
     }
 
     // MARK: - Roster actions
@@ -38,7 +76,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
                 removePetFromDock(kind)
             }
-            saveEnabledKinds(rosterModel.enabledKinds)
+            saveKinds(rosterModel.enabledKinds, forKey: Self.enabledPetsDefaultsKey)
+        }
+        rosterModel.onAttacksFilesToggle = { [weak self] _, _ in
+            guard let self else { return }
+            saveKinds(rosterModel.attacksFiles, forKey: Self.attacksFilesDefaultsKey)
         }
         rosterModel.onAttack = { [weak self] kind in
             guard let self, let id = instanceIDs[kind] else { return }
@@ -66,17 +108,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Persistence
 
-    private func loadEnabledKinds() -> Set<PetKind>? {
-        guard let raw = UserDefaults.standard.stringArray(forKey: Self.enabledPetsDefaultsKey) else {
+    private func loadKinds(forKey key: String) -> Set<PetKind>? {
+        guard let raw = UserDefaults.standard.stringArray(forKey: key) else {
             return nil
         }
         return Set(raw.compactMap(PetKind.init(rawValue:)))
     }
 
-    private func saveEnabledKinds(_ kinds: Set<PetKind>) {
+    private func saveKinds(_ kinds: Set<PetKind>, forKey key: String) {
         // Store in stable declaration order for a tidy plist.
         let raw = PetKind.allCases.filter(kinds.contains).map(\.rawValue)
-        UserDefaults.standard.set(raw, forKey: Self.enabledPetsDefaultsKey)
+        UserDefaults.standard.set(raw, forKey: key)
     }
 
     // MARK: - Menu bar popover

@@ -38,13 +38,17 @@ final class PetStateMachine {
     }
 
     /// Interrupts whatever the pet is doing to play one random attack
-    /// animation, then falls back to idle. No-op for pets without attacks.
-    func triggerAttack() {
+    /// animation, then falls back to idle. No-op for pets without attacks
+    /// (`then` is not called in that case — don't hang side effects on it).
+    /// - Parameter then: runs after the swing finishes, e.g. trashing a
+    ///   dropped file once the pet has "attacked" it.
+    func triggerAttack(then: (() -> Void)? = nil) {
         guard let pet, pet.canAttack else { return }
         timer?.invalidate()
         state = .attacking
         pet.playAttack { [weak self] in
             self?.enterIdle()
+            then?()
         }
     }
 

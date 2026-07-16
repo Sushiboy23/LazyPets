@@ -57,8 +57,28 @@ final class PetScene: SKScene {
         node.removeFromParent()
     }
 
-    func triggerAttack(id: UUID) {
-        petNodes[id]?.stateMachine.triggerAttack()
+    func triggerAttack(id: UUID, then: (() -> Void)? = nil) {
+        petNodes[id]?.stateMachine.triggerAttack(then: then)
+    }
+
+    /// Current on-screen rects (scene == view == window coordinates, since the
+    /// scene is anchor-zero and sized to the view) of pets of the given kinds
+    /// that can attack — the drop zones for the file-attack feature. Uses the
+    /// visible-body rect, not the full frame, so the drop glow hugs the
+    /// character instead of the art's transparent padding box.
+    func attackablePetRects(of kinds: Set<PetKind>) -> [(id: UUID, rect: CGRect)] {
+        petNodes.compactMap { id, node in
+            guard node.canAttack, kinds.contains(node.kind) else { return nil }
+            return (id: id, rect: node.bodyFrame)
+        }
+    }
+
+    /// Warning glow while a dragged file hovers over the pet: release = the
+    /// pet attacks and the file goes to the Trash.
+    func setHighlight(id: UUID, _ highlighted: Bool) {
+        guard let node = petNodes[id] else { return }
+        node.color = .systemYellow
+        node.colorBlendFactor = highlighted ? 0.5 : 0
     }
 
     /// Stops every pet's behavior timers (used while the overlay is hidden).

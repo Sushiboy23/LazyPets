@@ -46,6 +46,22 @@ final class PetNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// On-screen bounding box of the character's visible pixels — `frame`
+    /// includes the art's transparent padding, this doesn't (see
+    /// `PetAnimations.bodyUnitRect`). Mirroring flips the body's horizontal
+    /// offset within the frame, hence the xScale check.
+    var bodyFrame: CGRect {
+        let unit = PetAnimations.bodyUnitRect(for: kind)
+        let frame = self.frame
+        let unitMinX = xScale < 0 ? 1 - unit.maxX : unit.minX
+        return CGRect(
+            x: frame.minX + unitMinX * frame.width,
+            y: frame.minY + unit.minY * frame.height,
+            width: unit.width * frame.width,
+            height: unit.height * frame.height
+        )
+    }
+
     var canAttack: Bool { !animations.attacks.isEmpty }
     var canWalk: Bool { !animations.walk.isEmpty }
     var canRun: Bool { !animations.run.isEmpty }

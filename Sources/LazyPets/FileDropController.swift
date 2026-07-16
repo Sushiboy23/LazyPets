@@ -24,6 +24,9 @@ final class FileDropController {
     var targetsProvider: () -> [FileDropTarget] = { [] }
     /// Called when files land on a pet.
     var onDrop: (UUID, [URL]) -> Void = { _, _ in }
+    /// Called when a drag starts/stops hovering a pet's drop zone — drives
+    /// the pet's warning glow.
+    var onHover: (UUID, Bool) -> Void = { _, _ in }
 
     private var dragMonitor: Any?
     private var upMonitor: Any?
@@ -84,7 +87,6 @@ final class FileDropController {
     /// a drag, so this is re-run on every dragged event.
     private func updateDropWindows() {
         let targets = targetsProvider()
-
         for (id, window) in dropWindows where !targets.contains(where: { $0.id == id }) {
             window.orderOut(nil)
             dropWindows[id] = nil
@@ -94,11 +96,13 @@ final class FileDropController {
             // need pixel-perfect aim.
             let rect = target.screenRect.insetBy(dx: -12, dy: -12)
             if let window = dropWindows[target.id] {
-                window.setFrame(rect, display: false)
+                window.setFrame(rect, display: true)
             } else {
-                let window = DropWindow(frame: rect) { [weak self] urls in
-                    self?.onDrop(target.id, urls)
-                }
+                let window = DropWindow(
+                    frame: rect,
+                    onDrop: { [weak self] urls in self?.onDrop(target.id, urls) },
+                    onHover: { [weak self] hovering in self?.onHover(target.id, hovering) }
+                )
                 window.orderFrontRegardless()
                 dropWindows[target.id] = window
             }
@@ -106,10 +110,14 @@ final class FileDropController {
     }
 }
 
-/// Invisible borderless panel that accepts file drops for one pet.
+/// Borderless panel that accepts file drops for one pet. It draws a faint
+/// outline of the drop zone during the drag (which also gives the window
+/// visible pixels — a fully transparent window can be skipped by the
+/// system's content-based drag/click hit-testing) and a strong warning glow
+/// while a file hovers over it.
 private final class DropWindow: NSPanel {
 
-    init(frame: NSRect, onDrop: @escaping ([URL]) -> Void) {
+    init(frame: NSRect, onDrop: @escaping ([URL]) -> Void, onHover: @escaping (Bool) -> Void) {
         super.init(
             contentRect: frame,
             styleMask: [.borderless, .nonactivatingPanel],
@@ -119,13 +127,15 @@ private final class DropWindow: NSPanel {
         isOpaque = false
         backgroundColor = .clear
         hasShadow = false
-        level = .statusBar // same level as the pet overlay, ordered above it
+        level = .popUpMenu // above the pet overlay and the Dock
         collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle, .fullScreenAuxiliary]
+        hidesOnDeactivate = false // accessory app is never "active"; don't self-hide
         // NOT click-through — that's the whole point — but it only exists
         // while a file drag is in flight.
 
         let dropView = DropView(frame: NSRect(origin: .zero, size: frame.size))
         dropView.onDrop = onDrop
+        dropView.onHover = onHover
         dropView.autoresizingMask = [.width, .height]
         contentView = dropView
     }
@@ -134,10 +144,19 @@ private final class DropWindow: NSPanel {
     override var canBecomeMain: Bool { false }
 }
 
-/// The actual NSDraggingDestination.
+/// The actual NSDraggingDestination, with the glow drawing.
 private final class DropView: NSView {
 
     var onDrop: ([URL]) -> Void = { _ in }
+    var onHover: (Bool) -> Void = { _ in }
+
+    private var isHovered = false {
+        didSet {
+            guard isHovered != oldValue else { return }
+            onHover(isHovered)
+            needsDisplay = true
+        }
+    }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -148,8 +167,38 @@ private final class DropView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func draw(_ dirtyRect: NSRect) {
+        let inset = bounds.insetBy(dx: 3, dy: 3)
+        let path = NSBezierPath(roundedRect: inset, xRadius: 10, yRadius: 10)
+        path.lineWidth = 2
+
+        if isHovered {
+            // Warning glow: release here = pet attacks + file goes to Trash.
+            NSColor.systemYellow.withAlphaComponent(0.28).setFill()
+            path.fill()
+            NSColor.systemYellow.setStroke()
+            path.stroke()
+        } else {
+            // Faint hint that this pet can receive the file (and guarantees
+            // the window has visible pixels for drag hit-testing).
+            NSColor.systemYellow.withAlphaComponent(0.06).setFill()
+            path.fill()
+            NSColor.systemYellow.withAlphaComponent(0.35).setStroke()
+            path.stroke()
+        }
+    }
+
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        .generic
+        isHovered = true
+        return .generic
+    }
+
+    override func draggingExited(_ sender: NSDraggingInfo?) {
+        isHovered = false
+    }
+
+    override func draggingEnded(_ sender: NSDraggingInfo) {
+        isHovered = false
     }
 
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {

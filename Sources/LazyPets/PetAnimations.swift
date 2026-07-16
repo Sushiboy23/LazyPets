@@ -222,6 +222,70 @@ enum PetAnimations {
         }
     }
 
+    // MARK: - Body bounds
+
+    /// Bounding box of the character's opaque pixels within its idle frame, in
+    /// unit texture coordinates (0–1, bottom-left origin). Frames carry lots of
+    /// transparent padding around the body (the warrior's is ~120px in a 256px
+    /// frame), so anything that should hug the visible character — like the
+    /// file-drop glow — uses this instead of the full frame. Measured once per
+    /// kind from the first idle frame; body proportions are close enough across
+    /// states that one measurement serves them all.
+    static func bodyUnitRect(for kind: PetKind) -> CGRect {
+        if let cached = bodyRectCache[kind] { return cached }
+        let fullFrame = CGRect(x: 0, y: 0, width: 1, height: 1)
+        var rect = fullFrame
+        if let texture = set(for: kind).idle.first {
+            rect = opaqueUnitRect(of: texture.cgImage()) ?? fullFrame
+        }
+        bodyRectCache[kind] = rect
+        return rect
+    }
+
+    private static var bodyRectCache: [PetKind: CGRect] = [:]
+
+    /// Scans the image's alpha channel for the tight bounding box of visible
+    /// pixels, returned in unit coordinates with a bottom-left origin (to match
+    /// texture space). Nil if the image is fully transparent.
+    private static func opaqueUnitRect(of image: CGImage) -> CGRect? {
+        let width = image.width
+        let height = image.height
+        guard width > 0, height > 0,
+              let context = CGContext(
+                  data: nil,
+                  width: width,
+                  height: height,
+                  bitsPerComponent: 8,
+                  bytesPerRow: 0,
+                  space: CGColorSpaceCreateDeviceRGB(),
+                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+              ) else { return nil }
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+        guard let data = context.data else { return nil }
+
+        // RGBA — the alpha byte is the 4th component of each pixel.
+        let bytesPerRow = context.bytesPerRow
+        let pixels = data.bindMemory(to: UInt8.self, capacity: bytesPerRow * height)
+        var minX = width, maxX = -1, minRow = height, maxRow = -1
+        for row in 0..<height {
+            for column in 0..<width where pixels[row * bytesPerRow + column * 4 + 3] > 25 {
+                minX = min(minX, column)
+                maxX = max(maxX, column)
+                minRow = min(minRow, row)
+                maxRow = max(maxRow, row)
+            }
+        }
+        guard maxX >= 0 else { return nil }
+
+        // Buffer row 0 is the image's top row; flip to bottom-left origin.
+        return CGRect(
+            x: CGFloat(minX) / CGFloat(width),
+            y: CGFloat(height - 1 - maxRow) / CGFloat(height),
+            width: CGFloat(maxX - minX + 1) / CGFloat(width),
+            height: CGFloat(maxRow - minRow + 1) / CGFloat(height)
+        )
+    }
+
     // MARK: - Slicing
 
     /// Slices a grid sheet into textures in row-major order (top-left first).

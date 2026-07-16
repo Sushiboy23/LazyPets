@@ -31,6 +31,7 @@ enum TrashToast {
         panel.level = .statusBar
         panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle, .fullScreenAuxiliary]
         panel.ignoresMouseEvents = true // purely informational — never steal clicks
+        panel.hidesOnDeactivate = false // NSPanel default would hide it if the app deactivates mid-toast
         panel.contentView = hosting
 
         // Top-right corner, where system notifications appear.

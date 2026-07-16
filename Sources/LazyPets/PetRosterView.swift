@@ -6,15 +6,19 @@ import SwiftUI
 final class PetRosterModel: ObservableObject {
 
     @Published var enabledKinds: Set<PetKind>
+    /// Pets that "attack" files dropped on them (moving the file to the Trash).
+    @Published var attacksFiles: Set<PetKind>
     @Published var allHidden: Bool = false
 
     var onToggle: ((PetKind, Bool) -> Void)?
     var onAttack: ((PetKind) -> Void)?
+    var onAttacksFilesToggle: ((PetKind, Bool) -> Void)?
     var onHideAll: ((Bool) -> Void)?
     var onQuit: (() -> Void)?
 
-    init(enabledKinds: Set<PetKind> = []) {
+    init(enabledKinds: Set<PetKind> = [], attacksFiles: Set<PetKind> = []) {
         self.enabledKinds = enabledKinds
+        self.attacksFiles = attacksFiles
     }
 
     func setEnabled(_ enabled: Bool, for kind: PetKind) {
@@ -24,6 +28,15 @@ final class PetRosterModel: ObservableObject {
             enabledKinds.remove(kind)
         }
         onToggle?(kind, enabled)
+    }
+
+    func setAttacksFiles(_ on: Bool, for kind: PetKind) {
+        if on {
+            attacksFiles.insert(kind)
+        } else {
+            attacksFiles.remove(kind)
+        }
+        onAttacksFilesToggle?(kind, on)
     }
 }
 
@@ -72,6 +85,13 @@ struct PetRosterView: View {
                 }
                 .help("Attack!")
                 .disabled(!model.enabledKinds.contains(kind) || model.allHidden)
+
+                Toggle(isOn: attacksFilesBinding(for: kind)) {
+                    Image(systemName: "trash")
+                }
+                .toggleStyle(.button)
+                .help("Drop a file on this pet to attack it into the Trash")
+                .disabled(!model.enabledKinds.contains(kind))
             }
             Toggle("", isOn: enabledBinding(for: kind))
                 .toggleStyle(.switch)
@@ -109,6 +129,13 @@ struct PetRosterView: View {
         )
     }
 
+    private func attacksFilesBinding(for kind: PetKind) -> Binding<Bool> {
+        Binding(
+            get: { model.attacksFiles.contains(kind) },
+            set: { model.setAttacksFiles($0, for: kind) }
+        )
+    }
+
     private var hideAllBinding: Binding<Bool> {
         Binding(
             get: { model.allHidden },
@@ -121,5 +148,8 @@ struct PetRosterView: View {
 }
 
 #Preview {
-    PetRosterView(model: PetRosterModel(enabledKinds: [.girl, .knight]))
+    PetRosterView(model: PetRosterModel(
+        enabledKinds: [.girl, .knight],
+        attacksFiles: [.knight]
+    ))
 }
