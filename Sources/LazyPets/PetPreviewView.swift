@@ -1,3 +1,4 @@
+import AppKit
 import SpriteKit
 import SwiftUI
 
@@ -12,15 +13,6 @@ enum PetPreviewAction: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    /// Mirrors the dock state machine: idle/walk/run are ambient loops,
-    /// jump/attack are one-shot triggers that return to idle.
-    var loops: Bool {
-        switch self {
-        case .idle, .walk, .run: return true
-        case .jump, .attack: return false
-        }
-    }
-
     static func available(for kind: PetKind) -> [PetPreviewAction] {
         let set = PetAnimations.set(for: kind)
         var actions: [PetPreviewAction] = [.idle]
@@ -32,77 +24,55 @@ enum PetPreviewAction: String, CaseIterable, Identifiable {
     }
 }
 
-/// Minimal scene for the preview stage: one bottom-anchored sprite standing
-/// on a baseline, playing the same textures/frame timings as the dock pets
-/// but scaled up so the body reads clearly at window size.
-final class PetPreviewScene: SKScene {
+/// One playable animation for the stage: the same frames and per-frame timing
+/// the desktop pets use, converted to `NSImage`s and sized so the visible
+/// body stands ~110pt tall regardless of each pet's art padding.
+///
+/// The stage animates these with SwiftUI's clock (`TimelineView`) instead of
+/// presenting an `SKScene`: SpriteKit's view render loop refuses to advance
+/// inside the manage window (both `SpriteView` and a raw `SKView` rendered a
+/// single frozen frame), while SwiftUI's own updates demonstrably work there.
+private struct PreviewClip {
+    let frames: [NSImage]
+    let timePerFrame: TimeInterval
+    let pointSize: CGSize
+    let started = Date()
 
-    private let animations: PetAnimationSet
-    private let sprite = SKSpriteNode()
-    /// Called when a one-shot action finishes and the stage falls back to idle.
-    var onReturnToIdle: (() -> Void)?
-
-    init(kind: PetKind) {
-        animations = PetAnimations.set(for: kind)
-        super.init(size: CGSize(width: 400, height: 220))
-        scaleMode = .resizeFill
-        backgroundColor = .clear
-
-        sprite.anchorPoint = CGPoint(x: 0.5, y: 0)
-        if let first = animations.idle.first {
-            sprite.texture = first
-            sprite.size = first.size()
-        }
-        // Scale so the visible body (not the padded frame) is ~110pt tall,
-        // regardless of how much transparent padding each pet's art carries.
-        let frameHeight = animations.idle.first?.size().height ?? 1
-        let bodyHeight = PetAnimations.bodyUnitRect(for: kind).height * frameHeight
-        sprite.setScale(110 / max(bodyHeight, 1))
-        addChild(sprite)
-        play(.idle)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func didMove(to view: SKView) { layoutSprite() }
-    override func didChangeSize(_ oldSize: CGSize) { layoutSprite() }
-
-    private func layoutSprite() {
-        sprite.position = CGPoint(x: size.width / 2, y: 20)
-    }
-
-    func play(_ action: PetPreviewAction) {
-        sprite.removeAllActions()
-        let frames: [SKTexture]
+    static func make(kind: PetKind, action: PetPreviewAction) -> PreviewClip? {
+        let set = PetAnimations.set(for: kind)
+        let textures: [SKTexture]
         let timePerFrame: TimeInterval
         switch action {
         case .idle:
-            (frames, timePerFrame) = (animations.idle, animations.idleTimePerFrame)
+            (textures, timePerFrame) = (set.idle, set.idleTimePerFrame)
         case .walk:
-            (frames, timePerFrame) = (animations.walk, animations.walkTimePerFrame)
+            (textures, timePerFrame) = (set.walk, set.walkTimePerFrame)
         case .run:
-            (frames, timePerFrame) = (animations.run, animations.runTimePerFrame)
+            (textures, timePerFrame) = (set.run, set.runTimePerFrame)
         case .jump:
-            (frames, timePerFrame) = (animations.jump, animations.jumpTimePerFrame)
+            (textures, timePerFrame) = (set.jump, set.jumpTimePerFrame)
         case .attack:
-            (frames, timePerFrame) = (animations.attacks.randomElement() ?? [], animations.attackTimePerFrame)
+            (textures, timePerFrame) = (set.attacks.randomElement() ?? [], set.attackTimePerFrame)
         }
-        guard !frames.isEmpty else { return }
+        guard !textures.isEmpty, timePerFrame > 0 else { return nil }
 
-        let animate = SKAction.animate(with: frames, timePerFrame: timePerFrame, resize: true, restore: false)
-        if action.loops {
-            sprite.run(.repeatForever(animate))
-        } else {
-            sprite.run(.sequence([
-                animate,
-                .run { [weak self] in
-                    self?.play(.idle)
-                    self?.onReturnToIdle?()
-                },
-            ]))
+        let images = textures.map { texture -> NSImage in
+            let cgImage = texture.cgImage()
+            return NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height))
         }
+
+        // Shared points-per-pixel scale derived from the idle body height, so
+        // the pet stays the same size when switching between actions even
+        // though their sheets have different frame dimensions.
+        let idleFrameHeight = CGFloat(set.idle.first.map { $0.cgImage().height } ?? 1)
+        let bodyHeight = PetAnimations.bodyUnitRect(for: kind).height * idleFrameHeight
+        let scale = 110 / max(bodyHeight, 1)
+        let first = images[0].size
+        return PreviewClip(
+            frames: images,
+            timePerFrame: timePerFrame,
+            pointSize: CGSize(width: first.width * scale, height: first.height * scale)
+        )
     }
 }
 
@@ -117,13 +87,13 @@ struct PetPreviewView: View {
     let onBackToLibrary: () -> Void
 
     @State private var action: PetPreviewAction = .idle
-    @State private var scene: PetPreviewScene?
+    @State private var clip: PreviewClip?
 
     init(entry: PetCatalogEntry, model: PetRosterModel, onBackToLibrary: @escaping () -> Void) {
         self.entry = entry
         self.model = model
         self.onBackToLibrary = onBackToLibrary
-        _scene = State(initialValue: entry.kind.map(PetPreviewScene.init))
+        _clip = State(initialValue: entry.kind.flatMap { PreviewClip.make(kind: $0, action: .idle) })
     }
 
     var body: some View {
@@ -131,7 +101,7 @@ struct PetPreviewView: View {
             header
             stage
             if entry.kind != nil {
-                Text("Now playing: \(action.rawValue) (\(action.loops ? "loops" : "plays once, then back to Idle"))")
+                Text("Now playing: \(action.rawValue) (loops)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -146,9 +116,6 @@ struct PetPreviewView: View {
             }
         }
         .padding(14)
-        .onAppear {
-            scene?.onReturnToIdle = { action = .idle }
-        }
     }
 
     private var header: some View {
@@ -179,9 +146,17 @@ struct PetPreviewView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.secondary.opacity(0.08))
-            if let scene {
-                SpriteView(scene: scene, options: [.allowsTransparency])
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            if let clip {
+                TimelineView(.periodic(from: clip.started, by: clip.timePerFrame)) { context in
+                    let elapsed = max(0, context.date.timeIntervalSince(clip.started))
+                    let step = Int(elapsed / clip.timePerFrame)
+                    Image(nsImage: clip.frames[step % clip.frames.count])
+                        .resizable()
+                        .interpolation(.none) // crisp pixel art
+                        .frame(width: clip.pointSize.width, height: clip.pointSize.height)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .padding(.bottom, 20)
             } else {
                 Image(systemName: "lock.fill")
                     .font(.system(size: 34))
@@ -190,6 +165,7 @@ struct PetPreviewView: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 220)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 
     private var pills: some View {
@@ -197,7 +173,7 @@ struct PetPreviewView: View {
             ForEach(PetPreviewAction.available(for: entry.kind!)) { pill in
                 Button {
                     action = pill
-                    scene?.play(pill)
+                    clip = entry.kind.flatMap { PreviewClip.make(kind: $0, action: pill) }
                 } label: {
                     Text(pill.rawValue)
                         .font(.callout.weight(.medium))
