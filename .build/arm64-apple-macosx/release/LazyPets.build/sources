@@ -2,11 +2,15 @@
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/FileDropController.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift
+/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetClickController.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetRosterView.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift
+/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTimers.swift
+/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerNotifier.swift
+/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerPopoverView.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TrashToast.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/main.swift
 /Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DerivedSources/resource_bundle_accessor.swift

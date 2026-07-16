@@ -8,17 +8,27 @@ final class PetRosterModel: ObservableObject {
     @Published var enabledKinds: Set<PetKind>
     /// Pets that "attack" files dropped on them (moving the file to the Trash).
     @Published var attacksFiles: Set<PetKind>
+    /// Pets that open the focus-timer popover when clicked on the Dock.
+    @Published var timerPets: Set<PetKind>
     @Published var allHidden: Bool = false
+    @Published var timerSoundsOn: Bool = true
 
     var onToggle: ((PetKind, Bool) -> Void)?
     var onAttack: ((PetKind) -> Void)?
     var onAttacksFilesToggle: ((PetKind, Bool) -> Void)?
+    var onTimerToggle: ((PetKind, Bool) -> Void)?
+    var onTimerSoundsToggle: ((Bool) -> Void)?
     var onHideAll: ((Bool) -> Void)?
     var onQuit: (() -> Void)?
 
-    init(enabledKinds: Set<PetKind> = [], attacksFiles: Set<PetKind> = []) {
+    init(
+        enabledKinds: Set<PetKind> = [],
+        attacksFiles: Set<PetKind> = [],
+        timerPets: Set<PetKind> = []
+    ) {
         self.enabledKinds = enabledKinds
         self.attacksFiles = attacksFiles
+        self.timerPets = timerPets
     }
 
     func setEnabled(_ enabled: Bool, for kind: PetKind) {
@@ -37,6 +47,15 @@ final class PetRosterModel: ObservableObject {
             attacksFiles.remove(kind)
         }
         onAttacksFilesToggle?(kind, on)
+    }
+
+    func setTimerEnabled(_ on: Bool, for kind: PetKind) {
+        if on {
+            timerPets.insert(kind)
+        } else {
+            timerPets.remove(kind)
+        }
+        onTimerToggle?(kind, on)
     }
 }
 
@@ -58,6 +77,10 @@ struct PetRosterView: View {
             Divider()
 
             Toggle("Hide all pets", isOn: hideAllBinding)
+                .toggleStyle(.switch)
+                .controlSize(.small)
+
+            Toggle("Timer sounds", isOn: timerSoundsBinding)
                 .toggleStyle(.switch)
                 .controlSize(.small)
 
@@ -93,6 +116,12 @@ struct PetRosterView: View {
                 .help("Drop a file on this pet to attack it into the Trash")
                 .disabled(!model.enabledKinds.contains(kind))
             }
+            Toggle(isOn: timerBinding(for: kind)) {
+                Image(systemName: "timer")
+            }
+            .toggleStyle(.button)
+            .help("Click this pet on the Dock to set a focus timer")
+            .disabled(!model.enabledKinds.contains(kind))
             Toggle("", isOn: enabledBinding(for: kind))
                 .toggleStyle(.switch)
                 .controlSize(.small)
@@ -133,6 +162,23 @@ struct PetRosterView: View {
         Binding(
             get: { model.attacksFiles.contains(kind) },
             set: { model.setAttacksFiles($0, for: kind) }
+        )
+    }
+
+    private func timerBinding(for kind: PetKind) -> Binding<Bool> {
+        Binding(
+            get: { model.timerPets.contains(kind) },
+            set: { model.setTimerEnabled($0, for: kind) }
+        )
+    }
+
+    private var timerSoundsBinding: Binding<Bool> {
+        Binding(
+            get: { model.timerSoundsOn },
+            set: { on in
+                model.timerSoundsOn = on
+                model.onTimerSoundsToggle?(on)
+            }
         )
     }
 

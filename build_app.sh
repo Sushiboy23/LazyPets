@@ -24,5 +24,9 @@ cp Info.plist "$APP/Contents/Info.plist"
 # runtime via Bundle.module. Copy it in so the packaged app can find them.
 cp -R .build/release/LazyPets_LazyPets.bundle "$APP/Contents/Resources/"
 
+# Ad-hoc signature: UserNotifications (pet timer alerts) won't authorize a
+# completely unsigned bundle.
+codesign --force --deep --sign - "$APP"
+
 echo "Built $APP"
 echo "Run with: open $APP"

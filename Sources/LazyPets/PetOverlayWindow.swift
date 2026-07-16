@@ -103,27 +103,59 @@ final class PetOverlayWindow: NSPanel {
     }
 
     /// Drop zones for pets that may attack dropped files, in screen coords.
-    /// Converts each node frame through the full chain — scene → SKView →
-    /// window → screen — using SpriteKit/AppKit conversion APIs at each hop
-    /// (scene and view coordinate systems are NOT interchangeable, even when
-    /// the scene fills the view).
     func fileDropTargets(for kinds: Set<PetKind>) -> [FileDropTarget] {
         guard isVisible, let scene = petScene else { return [] }
         return scene.attackablePetRects(of: kinds).map { target in
-            let bottomLeft = scene.convertPoint(toView: target.rect.origin)
-            let topRight = scene.convertPoint(
-                toView: CGPoint(x: target.rect.maxX, y: target.rect.maxY)
-            )
-            // convertPoint(toView:) may flip the y-axis, so normalize corners.
-            let viewRect = NSRect(
-                x: min(bottomLeft.x, topRight.x),
-                y: min(bottomLeft.y, topRight.y),
-                width: abs(topRight.x - bottomLeft.x),
-                height: abs(topRight.y - bottomLeft.y)
-            )
-            let windowRect = skView.convert(viewRect, to: nil)
-            return FileDropTarget(id: target.id, screenRect: convertToScreen(windowRect))
+            FileDropTarget(id: target.id, screenRect: screenRect(fromSceneRect: target.rect, in: scene))
         }
+    }
+
+    /// Click zones for timer-enabled pets, in screen coords. `tooltip` lets
+    /// the caller attach hover text (time remaining + note) per pet.
+    func timerClickTargets(for kinds: Set<PetKind>, tooltip: (PetKind) -> String?) -> [PetClickTarget] {
+        guard isVisible, let scene = petScene else { return [] }
+        return scene.petRects(of: kinds).map { target in
+            PetClickTarget(
+                kind: target.kind,
+                screenRect: screenRect(fromSceneRect: target.rect, in: scene),
+                tooltip: tooltip(target.kind)
+            )
+        }
+    }
+
+    // MARK: - Timer visuals (forwarded to the scene)
+
+    func setPetFocused(id: UUID, _ focused: Bool) {
+        petScene?.setFocused(id: id, focused)
+    }
+
+    func setTimerProgress(id: UUID, remainingFraction: CGFloat) {
+        petScene?.setTimerProgress(id: id, remainingFraction: remainingFraction)
+    }
+
+    func setTimerDone(id: UUID) {
+        petScene?.setTimerDone(id: id)
+    }
+
+    func clearTimerVisuals(id: UUID) {
+        petScene?.clearTimer(id: id)
+    }
+
+    /// Scene rect → screen rect through the full chain — scene → SKView →
+    /// window → screen — using SpriteKit/AppKit conversion APIs at each hop
+    /// (scene and view coordinate systems are NOT interchangeable, even when
+    /// the scene fills the view).
+    private func screenRect(fromSceneRect rect: CGRect, in scene: PetScene) -> NSRect {
+        let bottomLeft = scene.convertPoint(toView: rect.origin)
+        let topRight = scene.convertPoint(toView: CGPoint(x: rect.maxX, y: rect.maxY))
+        // convertPoint(toView:) may flip the y-axis, so normalize corners.
+        let viewRect = NSRect(
+            x: min(bottomLeft.x, topRight.x),
+            y: min(bottomLeft.y, topRight.y),
+            width: abs(topRight.x - bottomLeft.x),
+            height: abs(topRight.y - bottomLeft.y)
+        )
+        return convertToScreen(skView.convert(viewRect, to: nil))
     }
 
     /// Temporarily hides all pets: orders the overlay out *and* pauses the

@@ -11,12 +11,13 @@ enum TrashToast {
     private static var window: NSPanel?
     private static var dismissWorkItem: DispatchWorkItem?
 
-    /// Shows the toast, replacing any toast still on screen.
-    static func show(message: String) {
+    /// Shows the toast, replacing any toast still on screen. Also serves as
+    /// the timer-completion fallback when notifications aren't available.
+    static func show(message: String, systemImage: String = "trash.fill") {
         dismissWorkItem?.cancel()
         window?.orderOut(nil)
 
-        let hosting = NSHostingView(rootView: ToastView(message: message))
+        let hosting = NSHostingView(rootView: ToastView(message: message, systemImage: systemImage))
         hosting.frame.size = hosting.fittingSize
 
         let panel = NSPanel(
@@ -67,10 +68,11 @@ enum TrashToast {
 
 private struct ToastView: View {
     let message: String
+    let systemImage: String
 
     var body: some View {
         HStack(spacing: 8) {
-            Image(systemName: "trash.fill")
+            Image(systemName: systemImage)
                 .foregroundStyle(.secondary)
             Text(message)
                 .lineLimit(1)

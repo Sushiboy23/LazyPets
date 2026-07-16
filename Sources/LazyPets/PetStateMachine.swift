@@ -19,6 +19,11 @@ final class PetStateMachine {
     private(set) var state: State = .idle
     private var timer: Timer?
 
+    /// While true the pet never roams — it stays planted where it is, still
+    /// animating its idle loop (the timer feature's "focused" stance).
+    /// Jumps and attacks are in place, so they may still occur/finish.
+    private(set) var holdsPosition = false
+
     private let idleDurationRange: ClosedRange<Double> = 4...12
     private let walkDurationRange: ClosedRange<Double> = 3...8
 
@@ -52,6 +57,28 @@ final class PetStateMachine {
         }
     }
 
+    func setHoldsPosition(_ holds: Bool) {
+        holdsPosition = holds
+        if holds, state == .walking || state == .running {
+            enterIdle() // stop mid-stride; the pet plants where it stands
+        }
+    }
+
+    /// One-shot celebration for a finished timer: a hop for pets that can
+    /// jump, an attack swing otherwise, then back to idle.
+    func triggerCelebration() {
+        guard let pet else { return }
+        if pet.canJump {
+            timer?.invalidate()
+            state = .jumping
+            pet.playJump { [weak self] in
+                self?.enterIdle()
+            }
+        } else if pet.canAttack {
+            triggerAttack()
+        }
+    }
+
     private func enterIdle() {
         state = .idle
         pet?.playIdle()
@@ -64,6 +91,10 @@ final class PetStateMachine {
     /// Pets without a walk animation (samurai) always run instead.
     private func pickNextActivity() {
         guard let pet else { return }
+        if holdsPosition {
+            enterIdle() // focused pets just keep idling in place
+            return
+        }
         let roll = Double.random(in: 0..<1)
         if pet.canJump && roll < 0.2 {
             enterJump()
