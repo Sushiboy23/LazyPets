@@ -128,7 +128,8 @@ final class PetScene: SKScene {
     }
 
     /// Timer hit zero: celebration animation, pulsing alarm badge, and a
-    /// steady glow that stays until the user acknowledges.
+    /// steady glow that stays until the user acknowledges. The pet plants
+    /// where it stands so it's easy to click.
     func setTimerDone(id: UUID) {
         guard let node = petNodes[id] else { return }
         setTimerProgress(id: id, remainingFraction: 0)
@@ -138,6 +139,7 @@ final class PetScene: SKScene {
         // A property, not an SKAction — the frame steppers call
         // removeAllActions() on every state change and would kill a pulse.
         node.colorBlendFactor = 0.35
+        node.stateMachine.setHoldsPosition(true)
         node.stateMachine.triggerCelebration()
     }
 

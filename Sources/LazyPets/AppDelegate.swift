@@ -106,17 +106,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
     }
 
-    /// Reflects a timer state change on the pet: focused stance + ring while
-    /// running, celebration + glow when done, back to roaming when cleared.
+    /// Reflects a timer state change on the pet: progress ring while running
+    /// (the pet keeps roaming — the ring follows), celebration + glow when
+    /// done, everything cleared when the timer goes away.
     private func syncTimerVisuals(for kind: PetKind, state: PetTimerState?) {
         guard let id = instanceIDs[kind], let window = overlayWindow else { return }
         if let state {
-            window.setPetFocused(id: id, true)
             switch state.status {
             case .running:
+                // Planted only while the popover is open on this pet, so the
+                // bubble doesn't drift after a strolling anchor.
+                let popoverOpen = timerPopover != nil && timerPopoverModel?.kind == kind
+                window.setPetFocused(id: id, popoverOpen)
                 window.setTimerProgress(id: id, remainingFraction: remainingFraction(of: state))
             case .done:
-                window.setTimerDone(id: id)
+                window.setTimerDone(id: id) // plants itself until acknowledged
             }
         } else {
             window.clearTimerVisuals(id: id)
