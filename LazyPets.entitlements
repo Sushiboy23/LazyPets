@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- Mac App Store entitlements. The local dev build (build_app.sh) is
+     ad-hoc signed WITHOUT these — as of adding Boombox the app had no
+     entitlements file and was not sandboxed, and enabling the sandbox on
+     the dev build would break the file-drop-to-Bin feature until it gets
+     sandbox-aware file access. Sign with this file for App Store builds.
+
+     scripting-targets access groups were read from each app's live sdef
+     (sdef /Applications/Spotify.app, sdef /System/Applications/Music.app)
+     — they must match exactly. No temporary-exception entitlements: App
+     Review does not accept them for public Mac App Store submissions. -->
+<dict>
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+    <key>com.apple.security.scripting-targets</key>
+    <dict>
+        <!-- Spotify: read current track + control playback -->
+        <key>com.spotify.client</key>
+        <array>
+            <string>com.spotify.library</string>
+            <string>com.spotify.playback</string>
+        </array>
+        <!-- Apple Music (bundle ID com.apple.Music on macOS 13+) -->
+        <key>com.apple.Music</key>
+        <array>
+            <string>com.apple.Music.library.read</string>
+            <string>com.apple.Music.playback</string>
+        </array>
+    </dict>
+</dict>
+</plist>
