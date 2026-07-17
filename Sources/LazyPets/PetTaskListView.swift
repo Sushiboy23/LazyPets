@@ -7,13 +7,20 @@ struct PetTaskListView: View {
 
     @ObservedObject var store: PetTaskStore
     let kind: PetKind
+    /// Hidden when the panel sits under the Timer/Task List tab switcher,
+    /// which already names it.
+    var showsHeader = true
 
     @State private var newTaskText = ""
 
+    private let rowHeight: CGFloat = 26
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label("Task List", systemImage: "checklist")
-                .font(.headline)
+            if showsHeader {
+                Label("Task List", systemImage: "checklist")
+                    .font(.headline)
+            }
 
             let tasks = store.tasks(for: kind)
             if tasks.isEmpty {
@@ -28,7 +35,10 @@ struct PetTaskListView: View {
                         }
                     }
                 }
-                .frame(maxHeight: 220)
+                // A fixed (not max) height: a flexible ScrollView would let
+                // the popover keep the smaller Timer-tab size after a tab
+                // switch instead of growing back.
+                .frame(height: min(CGFloat(tasks.count) * rowHeight, 220))
             }
 
             HStack(spacing: 6) {
@@ -117,7 +127,7 @@ struct PetClickPopoverView: View {
 
                 switch tab {
                 case .timer: TimerPopoverView(model: timerModel)
-                case .tasks: PetTaskListView(store: taskStore, kind: kind)
+                case .tasks: PetTaskListView(store: taskStore, kind: kind, showsHeader: false)
                 }
             } else if let timerModel {
                 TimerPopoverView(model: timerModel)

@@ -35,44 +35,53 @@ enum PetPreviewAction: String, CaseIterable, Identifiable {
 private struct PreviewClip {
     let frames: [NSImage]
     let timePerFrame: TimeInterval
-    let pointSize: CGSize
+    /// Points per art pixel — applied per frame, since sheets can have
+    /// slightly different frame dimensions within one clip (e.g. attack
+    /// frames interleaved with idle rest frames).
+    let scale: CGFloat
     let started = Date()
 
     static func make(kind: PetKind, action: PetPreviewAction) -> PreviewClip? {
         let set = PetAnimations.set(for: kind)
-        let textures: [SKTexture]
+        let frames: [NSImage]
         let timePerFrame: TimeInterval
         switch action {
         case .idle:
-            (textures, timePerFrame) = (set.idle, set.idleTimePerFrame)
+            (frames, timePerFrame) = (convert(set.idle), set.idleTimePerFrame)
         case .walk:
-            (textures, timePerFrame) = (set.walk, set.walkTimePerFrame)
+            (frames, timePerFrame) = (convert(set.walk), set.walkTimePerFrame)
         case .run:
-            (textures, timePerFrame) = (set.run, set.runTimePerFrame)
+            (frames, timePerFrame) = (convert(set.run), set.runTimePerFrame)
         case .jump:
-            (textures, timePerFrame) = (set.jump, set.jumpTimePerFrame)
+            (frames, timePerFrame) = (convert(set.jump), set.jumpTimePerFrame)
         case .attack:
-            (textures, timePerFrame) = (set.attacks.randomElement() ?? [], set.attackTimePerFrame)
+            timePerFrame = set.attackTimePerFrame
+            // Chain every attack pattern the pet has, resting in the idle
+            // pose for a beat between swings so each pattern reads as its
+            // own attack instead of one continuous blur.
+            let restTicks = max(1, Int((0.9 / max(timePerFrame, 0.01)).rounded()))
+            let rest = set.idle.first.map { Array(repeating: convert([$0])[0], count: restTicks) } ?? []
+            frames = set.attacks.flatMap { convert($0) + rest }
         }
-        guard !textures.isEmpty, timePerFrame > 0 else { return nil }
-
-        let images = textures.map { texture -> NSImage in
-            let cgImage = texture.cgImage()
-            return NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height))
-        }
+        guard !frames.isEmpty, timePerFrame > 0 else { return nil }
 
         // Shared points-per-pixel scale derived from the idle body height, so
         // the pet stays the same size when switching between actions even
         // though their sheets have different frame dimensions.
         let idleFrameHeight = CGFloat(set.idle.first.map { $0.cgImage().height } ?? 1)
         let bodyHeight = PetAnimations.bodyUnitRect(for: kind).height * idleFrameHeight
-        let scale = 110 / max(bodyHeight, 1)
-        let first = images[0].size
         return PreviewClip(
-            frames: images,
+            frames: frames,
             timePerFrame: timePerFrame,
-            pointSize: CGSize(width: first.width * scale, height: first.height * scale)
+            scale: 110 / max(bodyHeight, 1)
         )
+    }
+
+    private static func convert(_ textures: [SKTexture]) -> [NSImage] {
+        textures.map { texture in
+            let cgImage = texture.cgImage()
+            return NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height))
+        }
     }
 }
 
@@ -150,10 +159,11 @@ struct PetPreviewView: View {
                 TimelineView(.periodic(from: clip.started, by: clip.timePerFrame)) { context in
                     let elapsed = max(0, context.date.timeIntervalSince(clip.started))
                     let step = Int(elapsed / clip.timePerFrame)
-                    Image(nsImage: clip.frames[step % clip.frames.count])
+                    let image = clip.frames[step % clip.frames.count]
+                    Image(nsImage: image)
                         .resizable()
                         .interpolation(.none) // crisp pixel art
-                        .frame(width: clip.pointSize.width, height: clip.pointSize.height)
+                        .frame(width: image.size.width * clip.scale, height: image.size.height * clip.scale)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 20)

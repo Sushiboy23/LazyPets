@@ -1,3 +1,5 @@
+import AppKit
+import SpriteKit
 import SwiftUI
 
 /// One entry in the pet library: a playable `PetKind`, or a locked teaser
@@ -52,5 +54,38 @@ extension PetKind {
         case .cat: return .pink
         case .samurai: return .red
         }
+    }
+
+    /// The pet's actual sprite for avatar circles: first idle frame cropped
+    /// to the visible body (reusing the alpha-scan bounds), cached.
+    var avatarImage: NSImage? {
+        PetAvatarImages.image(for: self)
+    }
+}
+
+private enum PetAvatarImages {
+
+    private static var cache: [PetKind: NSImage] = [:]
+
+    static func image(for kind: PetKind) -> NSImage? {
+        if let cached = cache[kind] {
+            return cached
+        }
+        guard let texture = PetAnimations.set(for: kind).idle.first else { return nil }
+        let cgImage = texture.cgImage()
+        let unit = PetAnimations.bodyUnitRect(for: kind)
+        let width = CGFloat(cgImage.width)
+        let height = CGFloat(cgImage.height)
+        // Unit rect is bottom-left origin; CGImage cropping is top-left.
+        let cropRect = CGRect(
+            x: unit.minX * width,
+            y: height - unit.maxY * height,
+            width: unit.width * width,
+            height: unit.height * height
+        )
+        guard let cropped = cgImage.cropping(to: cropRect) else { return nil }
+        let image = NSImage(cgImage: cropped, size: NSSize(width: cropped.width, height: cropped.height))
+        cache[kind] = image
+        return image
     }
 }

@@ -17,6 +17,7 @@ struct ManageView: View {
         case unlockable
         case taskList
         case timers
+        case displays
         case settings
     }
 
@@ -24,8 +25,29 @@ struct ManageView: View {
     @State private var searchText = ""
     /// nil = the "All" chip.
     @State private var selectedCategory: String?
+    /// The pet in the (single, reusable) preview tab; nil = no preview tab.
+    @State private var previewEntry: PetCatalogEntry?
+    /// Whether the preview tab is the focused one (vs. the Library tab).
+    @State private var isPreviewFocused = false
+
+    private var isPreviewShowing: Bool { isPreviewFocused && previewEntry != nil }
 
     var body: some View {
+        VStack(spacing: 0) {
+            if previewEntry != nil {
+                tabStrip
+                Divider()
+            }
+            splitView
+        }
+        .onChange(of: selection) { _ in
+            // Picking anything in the sidebar means the user wants library/
+            // feature content — surface it, but keep the preview tab around.
+            isPreviewFocused = false
+        }
+    }
+
+    private var splitView: some View {
         NavigationSplitView {
             List(selection: $selection) {
                 Section("Library") {
@@ -41,15 +63,78 @@ struct ManageView: View {
                         .tag(SidebarItem.taskList)
                     Label("Timers", systemImage: "timer")
                         .tag(SidebarItem.timers)
+                    Label("Displays", systemImage: "display")
+                        .tag(SidebarItem.displays)
                     Label("Settings", systemImage: "gearshape")
                         .tag(SidebarItem.settings)
                 }
             }
             .navigationSplitViewColumnWidth(min: 150, ideal: 170)
         } detail: {
-            detail
-                .frame(minWidth: 440, minHeight: 340)
+            // The library stays in the hierarchy (just hidden) while the
+            // preview is up, so its search text, filter chips, and scroll
+            // position all survive the round trip.
+            ZStack {
+                detail
+                    .opacity(isPreviewShowing ? 0 : 1)
+                    .allowsHitTesting(!isPreviewShowing)
+                if isPreviewShowing, let entry = previewEntry {
+                    PetPreviewView(entry: entry, model: model) {
+                        isPreviewFocused = false
+                    }
+                    .id(entry.id) // fresh stage + idle default per pet
+                }
+            }
+            .frame(minWidth: 440, minHeight: 340)
         }
+    }
+
+    // MARK: - Preview tab strip
+
+    private var tabStrip: some View {
+        HStack(spacing: 6) {
+            tabLabel("Library", isActive: !isPreviewFocused)
+                .onTapGesture { isPreviewFocused = false }
+            if let entry = previewEntry {
+                HStack(spacing: 6) {
+                    Text("Preview: \(entry.name)")
+                        .font(.callout.weight(isPreviewFocused ? .medium : .regular))
+                    Button {
+                        previewEntry = nil
+                        isPreviewFocused = false
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Close preview")
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    isPreviewFocused ? Color.accentColor.opacity(0.22) : Color.clear,
+                    in: RoundedRectangle(cornerRadius: 6)
+                )
+                .contentShape(RoundedRectangle(cornerRadius: 6))
+                .onTapGesture { isPreviewFocused = true }
+            }
+            Spacer()
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+    }
+
+    private func tabLabel(_ title: String, isActive: Bool) -> some View {
+        Text(title)
+            .font(.callout.weight(isActive ? .medium : .regular))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                isActive ? Color.accentColor.opacity(0.22) : Color.clear,
+                in: RoundedRectangle(cornerRadius: 6)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 6))
     }
 
     @ViewBuilder private var detail: some View {
@@ -73,6 +158,8 @@ struct ManageView: View {
             )
         case .timers:
             timersDetail
+        case .displays:
+            displaysDetail
         case .settings:
             settingsDetail
         }
@@ -153,7 +240,7 @@ struct ManageView: View {
                     .buttonStyle(.plain)
                     .help("Favorite")
                     Spacer()
-                    Toggle("", isOn: enabledBinding(for: kind))
+                    Toggle("", isOn: rosterBinding(for: kind))
                         .toggleStyle(.switch)
                         .controlSize(.mini)
                         .labelsHidden()
@@ -166,20 +253,18 @@ struct ManageView: View {
             }
             .frame(height: 20)
 
-            Circle()
-                .fill(entry.kind?.avatarColor ?? Color.secondary.opacity(0.25))
-                .frame(width: 40, height: 40)
-                .overlay {
-                    if entry.isLocked {
+            if let kind = entry.kind, !entry.isLocked {
+                petAvatar(kind, size: 40)
+            } else {
+                Circle()
+                    .fill(Color.secondary.opacity(0.25))
+                    .frame(width: 40, height: 40)
+                    .overlay {
                         Image(systemName: "lock.fill")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                    } else {
-                        Text(String(entry.name.prefix(1)))
-                            .font(.headline)
-                            .foregroundStyle(.white)
                     }
-                }
+            }
 
             Text(entry.name)
                 .font(.callout)
@@ -193,6 +278,33 @@ struct ManageView: View {
                 .strokeBorder(Color.secondary.opacity(0.2))
         }
         .opacity(entry.isLocked ? 0.55 : 1)
+        .contentShape(RoundedRectangle(cornerRadius: 10))
+        // Locked pets open the preview too — the lock only affects the CTA.
+        .onTapGesture {
+            previewEntry = entry
+            isPreviewFocused = true
+        }
+    }
+
+    /// The pet's sprite at full slot size (same treatment as the dropdown
+    /// rows), falling back to a colored letter circle if no image loads.
+    @ViewBuilder private func petAvatar(_ kind: PetKind, size: CGFloat) -> some View {
+        if let sprite = kind.avatarImage {
+            Image(nsImage: sprite)
+                .resizable()
+                .interpolation(.none) // crisp pixel art
+                .scaledToFit()
+                .frame(width: size, height: size)
+        } else {
+            Circle()
+                .fill(kind.avatarColor)
+                .frame(width: size, height: size)
+                .overlay {
+                    Text(String(kind.rawValue.prefix(1)))
+                        .font(size >= 40 ? .headline : .caption.bold())
+                        .foregroundStyle(.white)
+                }
+        }
     }
 
     // MARK: - Feature details
@@ -223,14 +335,7 @@ struct ManageView: View {
         VStack(spacing: 6) {
             ForEach(PetKind.allCases, id: \.rawValue) { kind in
                 HStack(spacing: 8) {
-                    Circle()
-                        .fill(kind.avatarColor)
-                        .frame(width: 22, height: 22)
-                        .overlay {
-                            Text(String(kind.rawValue.prefix(1)))
-                                .font(.caption.bold())
-                                .foregroundStyle(.white)
-                        }
+                    petAvatar(kind, size: 22)
                     Text(kind.rawValue)
                     Spacer()
                     Toggle("", isOn: Binding(get: { isOn(kind) }, set: { setOn(kind, $0) }))
@@ -263,6 +368,34 @@ struct ManageView: View {
         .padding(14)
     }
 
+    private var displaysDetail: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label("Displays", systemImage: "display")
+                .font(.title3.weight(.semibold))
+            Text("Pin a pet to a monitor and it always opens there. Default keeps today's behavior. If a pinned monitor is unplugged, the pet falls back to the main display and snaps back when it reconnects.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+            ScrollView {
+                VStack(spacing: 6) {
+                    ForEach(PetKind.allCases.filter(model.rosterKinds.contains), id: \.rawValue) { kind in
+                        HStack(spacing: 8) {
+                            petAvatar(kind, size: 22)
+                            Text(kind.rawValue)
+                            Spacer()
+                            Picker("", selection: pinnedBinding(for: kind)) {
+                                DisplayPickerOptions(currentPin: model.pinnedDisplays[kind])
+                            }
+                            .labelsHidden()
+                            .frame(width: 220)
+                        }
+                    }
+                }
+            }
+            Spacer()
+        }
+        .padding(14)
+    }
+
     private var settingsDetail: some View {
         VStack(alignment: .leading, spacing: 12) {
             Label("Settings", systemImage: "gearshape")
@@ -290,10 +423,19 @@ struct ManageView: View {
 
     // MARK: - Bindings
 
-    private func enabledBinding(for kind: PetKind) -> Binding<Bool> {
+    /// The grid toggle means "in my rotation" (has a dropdown row); the
+    /// dropdown's own switch handles on-Dock visibility within the rotation.
+    private func rosterBinding(for kind: PetKind) -> Binding<Bool> {
         Binding(
-            get: { model.enabledKinds.contains(kind) },
-            set: { model.setEnabled($0, for: kind) }
+            get: { model.rosterKinds.contains(kind) },
+            set: { model.setInRoster($0, for: kind) }
+        )
+    }
+
+    private func pinnedBinding(for kind: PetKind) -> Binding<String?> {
+        Binding(
+            get: { model.pinnedDisplays[kind] },
+            set: { model.setPinnedDisplay($0, for: kind) }
         )
     }
 

@@ -1113,7 +1113,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetCatalog.swift"
         },
         {
           "kind" : "file",
@@ -1121,11 +1129,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetDisplays.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift"
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayCoordinator.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetPreviewView.swift"
         },
         {
           "kind" : "file",
@@ -1138,6 +1158,14 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskListView.swift"
         },
         {
           "kind" : "file",
@@ -1183,13 +1211,20 @@
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/FileDropController.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/ManageView.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetCatalog.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetClickController.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetDisplays.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayCoordinator.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetPreviewView.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetRosterView.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetScene.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskList.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskListView.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTimers.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/TimerNotifier.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/TimerPopoverView.swift.o",
@@ -1259,7 +1294,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/ManageView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetCatalog.swift.o"
         },
         {
           "kind" : "file",
@@ -1267,11 +1310,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetDisplays.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o"
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayCoordinator.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetPreviewView.swift.o"
         },
         {
           "kind" : "file",
@@ -1284,6 +1339,14 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskList.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskListView.swift.o"
         },
         {
           "kind" : "file",
@@ -1319,13 +1382,20 @@
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/FileDropController.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetCatalog.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetClickController.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetDisplays.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayCoordinator.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetPreviewView.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetRosterView.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskList.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskListView.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTimers.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerNotifier.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerPopoverView.swift",
@@ -1351,13 +1421,20 @@
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/FileDropController.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetCatalog.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetClickController.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetDisplays.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayCoordinator.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetPreviewView.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetRosterView.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetScene.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskList.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskListView.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTimers.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerNotifier.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/TimerPopoverView.swift",
@@ -1452,7 +1529,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetAnimations.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetCatalog.swift"
         },
         {
           "kind" : "file",
@@ -1460,11 +1545,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetDisplays.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetNode.swift"
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayCoordinator.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetOverlayWindow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetPreviewView.swift"
         },
         {
           "kind" : "file",
@@ -1477,6 +1574,14 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetStateMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskList.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/PetTaskListView.swift"
         },
         {
           "kind" : "file",
@@ -1526,7 +1631,15 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/ManageView.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetAnimations.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetCatalog.swift.o"
         },
         {
           "kind" : "file",
@@ -1534,11 +1647,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetDisplays.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetNode.swift.o"
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayCoordinator.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetOverlayWindow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetPreviewView.swift.o"
         },
         {
           "kind" : "file",
@@ -1551,6 +1676,14 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetStateMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskList.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/PetTaskListView.swift.o"
         },
         {
           "kind" : "file",

@@ -1,9 +1,10 @@
 import AppKit
 import SpriteKit
 
-/// Transparent, click-through, always-on-top panel that sits above the Dock
-/// and hosts the SpriteKit pet scene. Repositions itself whenever the screen
-/// configuration or Dock geometry changes.
+/// Transparent, click-through, always-on-top panel hosting the SpriteKit pet
+/// scene for ONE display. The PetOverlayCoordinator creates one of these per
+/// display that currently has pets and moves pets between them; this window
+/// only tracks its own display's Dock geometry.
 final class PetOverlayWindow: NSPanel {
 
     // Extra height above the Dock strip so the pet has room to bob/jump.
@@ -15,19 +16,21 @@ final class PetOverlayWindow: NSPanel {
     private var petScene: PetScene?
     private var dockWatchTimer: Timer?
 
-    /// The display the app launched on. Pets live on this screen for the
-    /// whole session — v1 deliberately doesn't chase the Dock across
-    /// displays. When this screen shows a Dock the pets stand on top of it;
-    /// when it doesn't, they stand flush on the screen's bottom edge.
-    private var homeDisplayID: CGDirectDisplayID?
+    /// The physical display this window belongs to (EDID UUID). When this
+    /// screen shows a Dock its pets stand on top of it; when it doesn't,
+    /// they stand flush on the screen's bottom edge.
+    let displayUUID: String
 
-    /// Re-resolved on every use: NSScreen instances are recreated when the
-    /// screen configuration changes, so only the display ID is stable.
-    private var homeScreen: NSScreen? {
-        NSScreen.screens.first { $0.displayID == homeDisplayID } ?? NSScreen.main
+    /// Re-resolved on every use — NSScreen instances are recreated on
+    /// configuration changes. Nil while the display is disconnected; no
+    /// fallback here, the coordinator relocates pets instead. (Named to
+    /// avoid NSWindow's own `screen` property.)
+    private var assignedScreen: NSScreen? {
+        ConnectedDisplays.screen(forUUID: displayUUID)
     }
 
-    init() {
+    init(displayUUID: String) {
+        self.displayUUID = displayUUID
         let initialRect = NSRect(x: 0, y: 0, width: 400, height: 100)
         super.init(
             contentRect: initialRect,
@@ -50,7 +53,6 @@ final class PetOverlayWindow: NSPanel {
         hidesOnDeactivate = false
 
         setUpSKView()
-        homeDisplayID = (NSScreen.main ?? NSScreen.screens.first)?.displayID
         repositionOverDock()
 
         NotificationCenter.default.addObserver(
@@ -75,6 +77,13 @@ final class PetOverlayWindow: NSPanel {
         dockWatchTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.repositionOverDock()
         }
+    }
+
+    /// Stops the dock-follow poll before the coordinator discards the window
+    /// (the run loop would otherwise keep the timer alive indefinitely).
+    func tearDown() {
+        dockWatchTimer?.invalidate()
+        dockWatchTimer = nil
     }
 
     private func setUpSKView() {
@@ -174,7 +183,7 @@ final class PetOverlayWindow: NSPanel {
     }
 
     @objc private func repositionOverDock() {
-        guard let screen = homeScreen,
+        guard let screen = assignedScreen,
               let dockRect = DockGeometry.dockRect(on: screen) else { return }
 
         let frame = NSRect(
@@ -203,13 +212,4 @@ final class PetOverlayWindow: NSPanel {
 
     override var canBecomeKey: Bool { false }
     override var canBecomeMain: Bool { false }
-}
-
-private extension NSScreen {
-    /// Stable identity for a physical display. NSScreen instances are
-    /// recreated on configuration changes, so the CGDirectDisplayID from the
-    /// device description is the only durable handle.
-    var displayID: CGDirectDisplayID? {
-        (deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? NSNumber)?.uint32Value
-    }
 }

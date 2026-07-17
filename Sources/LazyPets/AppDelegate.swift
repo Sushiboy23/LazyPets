@@ -3,17 +3,20 @@ import SwiftUI
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
-    private var overlayWindow: PetOverlayWindow?
+    private let overlays = PetOverlayCoordinator()
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
+    private var manageWindow: NSWindow?
 
     private let rosterModel = PetRosterModel()
     private let dropController = FileDropController()
     private let timerManager = PetTimerManager()
     private let timerNotifier = TimerNotifier()
     private let clickController = PetClickController()
+    private let taskStore = PetTaskStore()
     private var timerPopover: NSPopover?
-    private var timerPopoverModel: TimerPopoverModel?
+    private var timerPopoverModel: TimerPopoverModel? // nil when the popover shows only the Task List
+    private var petPopoverKind: PetKind?
     /// Scene identity for each enabled kind — the per-id plumbing into the scene.
     private var instanceIDs: [PetKind: UUID] = [:]
 
@@ -21,16 +24,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private static let attacksFilesDefaultsKey = "attacksFilesPetKinds"
     private static let timerPetsDefaultsKey = "timerPetKinds"
     private static let timerSoundsDefaultsKey = "timerSoundsEnabled"
+    private static let taskListPetsDefaultsKey = "taskListPetKinds"
+    private static let favoritesDefaultsKey = "favoritePetKinds"
+    private static let rosterDefaultsKey = "rosterPetKinds"
+    private static let pinnedDisplaysDefaultsKey = "pinnedDisplayUUIDs"
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        setUpOverlayWindow()
+        // Display assignments must be known before the pets are restored.
+        if let raw = UserDefaults.standard.dictionary(forKey: Self.pinnedDisplaysDefaultsKey) as? [String: String] {
+            rosterModel.pinnedDisplays = Dictionary(uniqueKeysWithValues:
+                raw.compactMap { key, uuid in PetKind(rawValue: key).map { ($0, uuid) } })
+        }
+        overlays.pinnedDisplayUUID = { [weak self] kind in
+            self?.rosterModel.pinnedDisplays[kind]
+        }
+        // Relocation rebuilds pet nodes from scratch — re-apply timer visuals.
+        overlays.onPetsRelocated = { [weak self] in
+            guard let self else { return }
+            for kind in instanceIDs.keys {
+                syncTimerVisuals(for: kind, state: timerManager.timers[kind])
+            }
+        }
 
         // Restore the roster before building UI; first launch falls back to
         // the original single-pet default.
         let saved = loadKinds(forKey: Self.enabledPetsDefaultsKey) ?? [.girl]
         rosterModel.enabledKinds = saved
+        // Union as migration (pre-roster installs) and as an invariant: an
+        // on-Dock pet must always have a dropdown row.
+        rosterModel.rosterKinds = (loadKinds(forKey: Self.rosterDefaultsKey) ?? []).union(saved)
         rosterModel.attacksFiles = loadKinds(forKey: Self.attacksFilesDefaultsKey) ?? []
         rosterModel.timerPets = loadKinds(forKey: Self.timerPetsDefaultsKey) ?? []
+        rosterModel.taskListPets = loadKinds(forKey: Self.taskListPetsDefaultsKey) ?? []
+        rosterModel.favoriteKinds = loadKinds(forKey: Self.favoritesDefaultsKey) ?? []
         rosterModel.timerSoundsOn =
             UserDefaults.standard.object(forKey: Self.timerSoundsDefaultsKey) as? Bool ?? true
         for kind in PetKind.allCases where saved.contains(kind) {
@@ -59,18 +85,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
             // No pet panel to anchor to from a notification click — fall
             // back to the menu bar item.
             if let button = statusItem?.button {
-                showTimerPopover(for: kind, anchor: button)
+                showPetPopover(for: kind, anchor: button)
             }
         }
 
         timerManager.onTick = { [weak self] kind, state in
             guard let self, let id = instanceIDs[kind] else { return }
-            overlayWindow?.setTimerProgress(id: id, remainingFraction: remainingFraction(of: state))
+            overlays.setTimerProgress(id: id, remainingFraction: remainingFraction(of: state))
         }
         timerManager.onCompleted = { [weak self] kind, state in
             guard let self else { return }
             if let id = instanceIDs[kind] {
-                overlayWindow?.setTimerDone(id: id)
+                overlays.setTimerDone(id: id)
             }
             if rosterModel.timerSoundsOn {
                 NSSound(named: "Glass")?.play()
@@ -87,13 +113,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
 
         clickController.targetsProvider = { [weak self] in
-            guard let self, let window = overlayWindow else { return [] }
-            return window.timerClickTargets(for: rosterModel.timerPets) { kind in
-                self.timerTooltip(for: kind)
+            guard let self else { return [] }
+            let kinds = rosterModel.timerPets.union(rosterModel.taskListPets)
+            return overlays.timerClickTargets(for: kinds) { kind in
+                self.petTooltip(for: kind)
             }
         }
         clickController.onClick = { [weak self] kind, anchor in
-            self?.showTimerPopover(for: kind, anchor: anchor)
+            self?.showPetPopover(for: kind, anchor: anchor)
         }
         clickController.start()
 
@@ -110,20 +137,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     /// (the pet keeps roaming — the ring follows), celebration + glow when
     /// done, everything cleared when the timer goes away.
     private func syncTimerVisuals(for kind: PetKind, state: PetTimerState?) {
-        guard let id = instanceIDs[kind], let window = overlayWindow else { return }
+        guard let id = instanceIDs[kind] else { return }
         if let state {
             switch state.status {
             case .running:
                 // Planted only while the popover is open on this pet, so the
                 // bubble doesn't drift after a strolling anchor.
                 let popoverOpen = timerPopover != nil && timerPopoverModel?.kind == kind
-                window.setPetFocused(id: id, popoverOpen)
-                window.setTimerProgress(id: id, remainingFraction: remainingFraction(of: state))
+                overlays.setPetFocused(id: id, popoverOpen)
+                overlays.setTimerProgress(id: id, remainingFraction: remainingFraction(of: state))
             case .done:
-                window.setTimerDone(id: id) // plants itself until acknowledged
+                overlays.setTimerDone(id: id) // plants itself until acknowledged
             }
         } else {
-            window.clearTimerVisuals(id: id)
+            overlays.clearTimerVisuals(id: id)
         }
     }
 
@@ -133,22 +160,72 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         return CGFloat(max(0, min(1, state.remaining / total)))
     }
 
-    private func timerTooltip(for kind: PetKind) -> String {
-        guard let state = timerManager.timers[kind] else {
-            return "Click to set a timer"
+    private func petTooltip(for kind: PetKind) -> String {
+        var parts: [String] = []
+        if rosterModel.timerPets.contains(kind) {
+            if let state = timerManager.timers[kind] {
+                let note = state.note.isEmpty ? "" : " — \(state.note)"
+                switch state.status {
+                case .running: parts.append("\(PetTimerState.format(state.remaining)) left\(note)")
+                case .done: parts.append("Time's up!\(note)")
+                }
+            } else {
+                parts.append("Click to set a timer")
+            }
         }
-        let note = state.note.isEmpty ? "" : " — \(state.note)"
-        switch state.status {
-        case .running:
-            return "\(PetTimerState.format(state.remaining)) left\(note)"
-        case .done:
-            return "Time's up!\(note)"
+        if rosterModel.taskListPets.contains(kind) {
+            let tasks = taskStore.tasks(for: kind)
+            parts.append(tasks.isEmpty
+                ? "Task List"
+                : "\(tasks.filter(\.isDone).count)/\(tasks.count) tasks done")
+        }
+        return parts.joined(separator: " • ")
+    }
+
+    /// Shows whatever the click features enabled for this pet call for: the
+    /// timer panel, the Task List, or a segmented switcher between the two.
+    private func showPetPopover(for kind: PetKind, anchor: NSView) {
+        timerPopover?.performClose(nil)
+
+        let showsTimer = rosterModel.timerPets.contains(kind)
+        let showsTasks = rosterModel.taskListPets.contains(kind)
+        let timerModel = showsTimer ? makeTimerPopoverModel(for: kind) : nil
+
+        let popover = NSPopover()
+        popover.behavior = .transient // Esc / click-outside cancels
+        popover.delegate = self
+        let hosting = NSHostingController(
+            rootView: PetClickPopoverView(
+                timerModel: timerModel,
+                taskStore: taskStore,
+                kind: kind,
+                showsTasks: showsTasks,
+                // With both features on, land on the active timer if there
+                // is one; otherwise the Task List is the likelier target.
+                tab: timerManager.timers[kind] != nil ? .timer : (showsTasks ? .tasks : .timer)
+            )
+        )
+        // Track the SwiftUI content size so the popover grows/shrinks when
+        // the user switches tabs (or the list changes length).
+        hosting.sizingOptions = .preferredContentSize
+        popover.contentViewController = hosting
+        popover.show(relativeTo: anchor.bounds, of: anchor, preferredEdge: .maxY)
+        // Same accessory-app quirk as the roster popover: no key focus means
+        // the text fields can't be typed in.
+        popover.contentViewController?.view.window?.makeKey()
+
+        timerPopover = popover
+        timerPopoverModel = timerModel
+        petPopoverKind = kind
+
+        // Plant the pet while the popover is up so the bubble doesn't chase
+        // a strolling pet; popoverDidClose re-syncs from the timer state.
+        if let id = instanceIDs[kind] {
+            overlays.setPetFocused(id: id, true)
         }
     }
 
-    private func showTimerPopover(for kind: PetKind, anchor: NSView) {
-        timerPopover?.performClose(nil)
-
+    private func makeTimerPopoverModel(for kind: PetKind) -> TimerPopoverModel {
         let model = TimerPopoverModel(kind: kind, state: timerManager.timers[kind])
         model.onStart = { [weak self] minutes, note in
             guard let self else { return }
@@ -178,34 +255,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
             self?.timerManager.dismissDone(kind: kind)
             self?.timerPopover?.performClose(nil)
         }
-
-        let popover = NSPopover()
-        popover.behavior = .transient // Esc / click-outside cancels
-        popover.delegate = self
-        popover.contentViewController = NSHostingController(
-            rootView: TimerPopoverView(model: model)
-        )
-        popover.show(relativeTo: anchor.bounds, of: anchor, preferredEdge: .maxY)
-        // Same accessory-app quirk as the roster popover: no key focus means
-        // the text fields can't be typed in.
-        popover.contentViewController?.view.window?.makeKey()
-
-        timerPopover = popover
-        timerPopoverModel = model
-
-        // Plant the pet while the popover is up so the bubble doesn't chase
-        // a strolling pet; popoverDidClose re-syncs from the timer state.
-        if let id = instanceIDs[kind] {
-            overlayWindow?.setPetFocused(id: id, true)
-        }
+        return model
     }
 
     func popoverDidClose(_ notification: Notification) {
         guard (notification.object as? NSPopover) === timerPopover else { return }
-        let kind = timerPopoverModel?.kind
+        let kind = petPopoverKind
         timerPopover = nil
         timerPopoverModel = nil
+        petPopoverKind = nil
         if let kind {
+            // Releases the planted pet; re-plants if its timer is done.
             syncTimerVisuals(for: kind, state: timerManager.timers[kind])
         }
     }
@@ -214,12 +274,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func setUpFileDrops() {
         dropController.targetsProvider = { [weak self] in
-            guard let self, let window = overlayWindow else { return [] }
-            return window.fileDropTargets(for: rosterModel.attacksFiles)
+            guard let self else { return [] }
+            return overlays.fileDropTargets(for: rosterModel.attacksFiles)
         }
         dropController.onDrop = { [weak self] id, urls in
             guard let self else { return }
-            overlayWindow?.triggerAttack(id: id) {
+            overlays.triggerAttack(id: id) {
                 var trashedNames: [String] = []
                 for url in urls {
                     do {
@@ -239,7 +299,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
             }
         }
         dropController.onHover = { [weak self] id, hovering in
-            self?.overlayWindow?.setPetHighlighted(id: id, hovering)
+            self?.overlays.setPetHighlighted(id: id, hovering)
         }
         dropController.start()
     }
@@ -268,15 +328,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
                 timerManager.cancel(kind: kind)
             }
         }
+        rosterModel.onTaskListToggle = { [weak self] _, _ in
+            guard let self else { return }
+            // Toggling off only hides access — the tasks themselves persist.
+            saveKinds(rosterModel.taskListPets, forKey: Self.taskListPetsDefaultsKey)
+        }
         rosterModel.onTimerSoundsToggle = { on in
             UserDefaults.standard.set(on, forKey: Self.timerSoundsDefaultsKey)
         }
+        rosterModel.onFavoriteToggle = { [weak self] _, _ in
+            guard let self else { return }
+            saveKinds(rosterModel.favoriteKinds, forKey: Self.favoritesDefaultsKey)
+        }
+        rosterModel.onRosterChange = { [weak self] _, _ in
+            guard let self else { return }
+            saveKinds(rosterModel.rosterKinds, forKey: Self.rosterDefaultsKey)
+        }
+        rosterModel.onManage = { [weak self] in
+            self?.popover?.performClose(nil)
+            self?.showManageWindow()
+        }
         rosterModel.onAttack = { [weak self] kind in
             guard let self, let id = instanceIDs[kind] else { return }
-            overlayWindow?.triggerAttack(id: id)
+            overlays.triggerAttack(id: id)
         }
         rosterModel.onHideAll = { [weak self] hidden in
-            self?.overlayWindow?.setAllPetsHidden(hidden)
+            self?.overlays.setAllPetsHidden(hidden)
+        }
+        rosterModel.onPinChange = { [weak self] kind, _ in
+            guard let self else { return }
+            let raw = Dictionary(uniqueKeysWithValues:
+                rosterModel.pinnedDisplays.map { ($0.key.rawValue, $0.value) })
+            UserDefaults.standard.set(raw, forKey: Self.pinnedDisplaysDefaultsKey)
+            overlays.assignmentChanged(for: kind)
         }
         rosterModel.onQuit = {
             NSApp.terminate(nil)
@@ -287,7 +371,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         guard instanceIDs[kind] == nil else { return }
         let instance = PetInstance(kind: kind)
         instanceIDs[kind] = instance.id
-        overlayWindow?.addPet(instance)
+        overlays.addPet(instance)
         // A timer may have kept counting while the pet was off the Dock —
         // restore its focused stance/badge on the fresh node.
         syncTimerVisuals(for: kind, state: timerManager.timers[kind])
@@ -295,7 +379,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func removePetFromDock(_ kind: PetKind) {
         guard let id = instanceIDs.removeValue(forKey: kind) else { return }
-        overlayWindow?.removePet(id: id)
+        overlays.removePet(id: id)
     }
 
     // MARK: - Persistence
@@ -354,11 +438,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
     }
 
-    // MARK: - Overlay
+    // MARK: - Manage window
 
-    private func setUpOverlayWindow() {
-        let window = PetOverlayWindow()
-        window.orderFrontRegardless()
-        overlayWindow = window
+    /// The full pet library + feature settings. A real resizable window
+    /// (unlike the popovers), created once and reused.
+    private func showManageWindow() {
+        if manageWindow == nil {
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 720, height: 480),
+                styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                backing: .buffered,
+                defer: false
+            )
+            window.title = "Manage pets and features"
+            window.isReleasedWhenClosed = false // reused across opens
+            window.center()
+            window.contentView = NSHostingView(rootView: ManageView(model: rosterModel))
+            manageWindow = window
+        }
+        manageWindow?.makeKeyAndOrderFront(nil)
+        // Accessory app: without activating, the window appears behind the
+        // frontmost app and can't take keyboard focus for the search field.
+        NSApp.activate(ignoringOtherApps: true)
     }
+
 }
