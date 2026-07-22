@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- Info.plist for the Xcode app target (App Store / TestFlight builds).
+     The root-level Info.plist is the hand-rolled dev-bundle one used by
+     build_app.sh; keep the usage-description strings in sync between them. -->
+<dict>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>LazyPets</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleVersion</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(MARKETING_VERSION)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+    <!-- Required for App Store submissions. -->
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.entertainment</string>
+    <!-- No Dock icon, no app-switcher entry — the whole point is to decorate
+         the Dock quietly, not add another icon to it. -->
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <!-- Boombox: sending Apple Events to supported music apps triggers a
+         one-time Automation permission prompt per app; this is its reason
+         string. Deliberately generic — no single service named. -->
+    <key>NSAppleEventsUsageDescription</key>
+    <string>LazyPets uses this to show what’s playing and let you control playback.</string>
+    <!-- Dial: only the live input-level meter reads the microphone, and only
+         while the Input panel is on screen. Device switching and volume use
+         CoreAudio properties and need no permission. -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>LazyPets shows a live input level meter while the Dial audio panel is open.</string>
+</dict>
+</plist>

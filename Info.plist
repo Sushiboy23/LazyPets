@@ -24,5 +24,15 @@
     <true/>
     <key>NSHighResolutionCapable</key>
     <true/>
+    <!-- Boombox: sending Apple Events to supported music apps triggers a
+         one-time Automation permission prompt per app; this is its reason
+         string. Deliberately generic — no single service named. -->
+    <key>NSAppleEventsUsageDescription</key>
+    <string>LazyPets uses this to show what’s playing and let you control playback.</string>
+    <!-- Dial: only the live input-level meter reads the microphone, and only
+         while the Input panel is on screen. Device switching and volume use
+         CoreAudio properties and need no permission. -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>LazyPets shows a live input level meter while the Dial audio panel is open.</string>
 </dict>
 </plist>

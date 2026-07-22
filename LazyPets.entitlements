@@ -14,6 +14,10 @@
 <dict>
     <key>com.apple.security.app-sandbox</key>
     <true/>
+    <!-- Dial's live input-level meter (AVAudioEngine mic tap). Device
+         list/switching/volume are CoreAudio properties and need nothing. -->
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
     <key>com.apple.security.scripting-targets</key>
     <dict>
         <!-- Spotify: read current track + control playback -->

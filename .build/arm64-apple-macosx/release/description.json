@@ -3,6 +3,48 @@
 
   ],
   "copyCommands" : {
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_attack.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/cadet_attack.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_attack.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_idle.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/cadet_idle.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_idle.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_walk.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/cadet_walk.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cadet_walk.png"
+        }
+      ]
+    },
     "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cat_attack.png" : {
       "inputs" : [
         {
@@ -70,6 +112,90 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/cat_walk.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl2_idle.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl2_idle.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl2_idle.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl2_walk.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl2_walk.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl2_walk.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_attack.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl_attack.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_attack.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_idle.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl_idle.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_idle.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_run.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl_run.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_run.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_walk.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/catgirl_walk.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/catgirl_walk.png"
         }
       ]
     },
@@ -252,6 +378,90 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/knight_walk.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_attack.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_attack.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_attack.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle1.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_idle1.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle1.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle2.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_idle2.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle2.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle3.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_idle3.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_idle3.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_run.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_run.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_run.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_walk.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/mai_walk.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/mai_walk.png"
         }
       ]
     },
@@ -1080,6 +1290,90 @@
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/warrior_walk_10.png"
         }
       ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_attack.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack2.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_attack2.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack2.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack3.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_attack3.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_attack3.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_idle.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_idle.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_idle.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_run.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_run.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_run.png"
+        }
+      ]
+    },
+    "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_walk.png" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Resources/wizard_walk.png"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets_LazyPets.bundle/wizard_walk.png"
+        }
+      ]
     }
   },
   "explicitTargetDependencyImportCheckingMode" : {
@@ -1102,6 +1396,26 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioDeviceService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioLevelMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Boombox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/BoomboxView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DialView.swift"
         },
         {
           "kind" : "file",
@@ -1209,6 +1523,11 @@
       "moduleOutputPath" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/Modules/LazyPets.swiftmodule",
       "objects" : [
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioDeviceService.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioLevelMonitor.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/Boombox.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/BoomboxView.swift.o",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DialView.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DockGeometry.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/FileDropController.swift.o",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/ManageView.swift.o",
@@ -1283,6 +1602,26 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioDeviceService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioLevelMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/Boombox.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/BoomboxView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DialView.swift.o"
         },
         {
           "kind" : "file",
@@ -1380,6 +1719,11 @@
       "prepareForIndexing" : false,
       "sources" : [
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioDeviceService.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioLevelMonitor.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Boombox.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/BoomboxView.swift",
+        "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DialView.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/FileDropController.swift",
         "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift",
@@ -1419,6 +1763,11 @@
       "lazypets",
       "-c",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AppDelegate.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioDeviceService.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioLevelMonitor.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Boombox.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/BoomboxView.swift",
+      "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DialView.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/FileDropController.swift",
       "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/ManageView.swift",
@@ -1521,6 +1870,26 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioDeviceService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/AudioLevelMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/Boombox.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/BoomboxView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DialView.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/Sources/LazyPets/DockGeometry.swift"
         },
         {
@@ -1620,6 +1989,26 @@
         {
           "kind" : "file",
           "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AppDelegate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioDeviceService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/AudioLevelMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/Boombox.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/BoomboxView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/zackwek/Desktop/ClaudeCowork/LazyPetsCowork/LazyPets/.build/arm64-apple-macosx/release/LazyPets.build/DialView.swift.o"
         },
         {
           "kind" : "file",

@@ -4,6 +4,18 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_attack.png</key>
+		<data>
+		G+u+/h9cUU/eWpGMt8rk9vJ90ZI=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_idle.png</key>
+		<data>
+		WxbEP5ZAuBqZkK3H4w3FGbO4MKA=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_walk.png</key>
+		<data>
+		XWw0Vka5PvhtciqJENKN1WeSyMk=
+		</data>
 		<key>Resources/LazyPets_LazyPets.bundle/cat_attack.png</key>
 		<data>
 		RvMJMfopzzJJ8rfc6jikVuF7CI4=
@@ -23,6 +35,30 @@
 		<key>Resources/LazyPets_LazyPets.bundle/cat_walk.png</key>
 		<data>
 		jR9IY8vhR1PddgTzPIzAcnBEQyM=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl2_idle.png</key>
+		<data>
+		coCjAKRrFhR0gbBmT/XrhrvCnhk=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl2_walk.png</key>
+		<data>
+		UfryOcm+3c+aUlpMIgV1hq9ZbRE=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_attack.png</key>
+		<data>
+		xOJJVxVHG90JoILHvEM+SvbwFYI=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_idle.png</key>
+		<data>
+		d00Zoo8bx/20YR9W20reU7LzpWc=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_run.png</key>
+		<data>
+		ACd3E9tVcbMSJXGeL6RA8TkSTKs=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_walk.png</key>
+		<data>
+		urH1aiWeOKsrMax1TQ4eJCJ1CKo=
 		</data>
 		<key>Resources/LazyPets_LazyPets.bundle/hero_combo1.png</key>
 		<data>
@@ -75,6 +111,30 @@
 		<key>Resources/LazyPets_LazyPets.bundle/knight_walk.png</key>
 		<data>
 		1HC09eFbnnJT4nhRfIP/YIE3XRU=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_attack.png</key>
+		<data>
+		lnRdRzwPfguCkYbcTkNc5+pvAlE=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle1.png</key>
+		<data>
+		2QnVMduE40GPpZqlqwr9PChqywk=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle2.png</key>
+		<data>
+		A4fMJe3OqoRUO6e9mPJU46lYDKA=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle3.png</key>
+		<data>
+		gKkD6SI7+qAFKb20RyTtwzm9WHY=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_run.png</key>
+		<data>
+		5PZi2DC/+RdAGqW8oKqQQj2szfs=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_walk.png</key>
+		<data>
+		i4/JhDpi44U13G/RMg0LhmYZUmE=
 		</data>
 		<key>Resources/LazyPets_LazyPets.bundle/samurai_attack.png</key>
 		<data>
@@ -312,9 +372,54 @@
 		<data>
 		yLyBPQYtNgHuAWXDvRRHCO0h7NE=
 		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack.png</key>
+		<data>
+		W8+gWod9ddjUfNclXnitvZHy3ls=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack2.png</key>
+		<data>
+		KDJ3XhrDZ1AroHtwUvm3HxXDCP4=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack3.png</key>
+		<data>
+		q+nqmWR3Xr23y2fr25cpXBzKHwk=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_idle.png</key>
+		<data>
+		I8rQZ3/t3qnLQz6XAMyxMEzEuLA=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_run.png</key>
+		<data>
+		su+2av463h8TYKUBLS96mJnF/Bw=
+		</data>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_walk.png</key>
+		<data>
+		+jkuDG2BvOG/r/TPKoriopsKhuM=
+		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_attack.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rTXpO36ydeYoRZ0AYB90yEmEpyI55XbVdH4zWNju09Q=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_idle.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			mu7/LtPINrD3hL+1iz4EZ5ogsDqz02QHhQ5X86eMt3I=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/cadet_walk.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			bZltxUB4DQ+wIIpTpV0hZ3i/c9D1Y6pgD9Xca2KJcVA=
+			</data>
+		</dict>
 		<key>Resources/LazyPets_LazyPets.bundle/cat_attack.png</key>
 		<dict>
 			<key>hash2</key>
@@ -348,6 +453,48 @@
 			<key>hash2</key>
 			<data>
 			DhB/13zKNCATAxTRl9DzG7ehwppRBPBHf3gOKj9/Q/c=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl2_idle.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7Q2bQErUWIaIK4dB8pWPXld2L+REhxOgUKL/+LFb9i4=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl2_walk.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SFY7VigpfdZJ3dKemol1unpoCh2KdxiqY1Di/uKzBrQ=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_attack.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wNqU0Bap4pLyjDxGJa48In4Uf6iN30Ta2Myoo6I1a1E=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_idle.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Ni1KGdpX7QURnROcUf1M8M+XGYyhgL2IfhS8X3T2w5s=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_run.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CCxPK8XvthMNGcAYQJe575YYdh1IItNkM76oB2gw888=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/catgirl_walk.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gEMnTEBQMXV6RJBcyNms/dfyYS2p2ikO0SK39SubRds=
 			</data>
 		</dict>
 		<key>Resources/LazyPets_LazyPets.bundle/hero_combo1.png</key>
@@ -439,6 +586,48 @@
 			<key>hash2</key>
 			<data>
 			CBWLz+JfTEknxsfpthMm7RxP4cABqYNIA0fGVRu2Y6Q=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_attack.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AL30imbvtM91YRbVlc020u2SJOVfFXcSbbfJVq0YSt8=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle1.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5WNXq0U2NiEKZ1Z+3DSkhcSpeALHUQGSQd7pwooL9NY=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle2.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5aC5dmRoOkhcr/Ee8pmgN7pxPm5Dv8R1spCnTa80EZs=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_idle3.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5M5anRbepRW5EgG07sjAeKTUXtjwtyYyBmmLGgCZX+Y=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_run.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			mVgrZlVmZ6n9WCmAqto5ZOl3ghmZv6PCUQY3SWEPSPQ=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/mai_walk.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rxJbHdj3ccEY8CqDBnH7tuRQJxmtQkdLqMIWuJ4NzbE=
 			</data>
 		</dict>
 		<key>Resources/LazyPets_LazyPets.bundle/samurai_attack.png</key>
@@ -852,6 +1041,48 @@
 			<key>hash2</key>
 			<data>
 			j6EQ7JD5W0efczn5xkRj0DlRGkCtsi7UpbhX9UOvhLU=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			17Cn/gq+f0Q1dmrZ0wo1lEn+vLSbpRVX8IMRd49fZtI=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack2.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			IfLaswaWrNmk8CcGb9dM6BRSSdF82cjnZpJ/BohLZMY=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_attack3.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qf8B9C3jioqkZ3KNZXdzbVF9WGL2r+r+IkMaX4I5iRg=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_idle.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AhB76rdt+ssl34aoAt8JaxI8Zwycyfq0x3Psjn2yvXk=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_run.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gizLM0oMsy2SCrKrw13vsd5gz/vrGjZqv4mioj73U/M=
+			</data>
+		</dict>
+		<key>Resources/LazyPets_LazyPets.bundle/wizard_walk.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			bcDORkCWaKC4mdlMwYgbSH7FqD1VYwWp3hb3RzZNX5c=
 			</data>
 		</dict>
 	</dict>
